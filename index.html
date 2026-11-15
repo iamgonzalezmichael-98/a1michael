@@ -1,0 +1,3489 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+  <meta name="theme-color" content="#0f172a" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+
+  <meta name="mobile-web-app-capable" content="yes" />
+
+  <title>Oxford 3000™ A1 — Entrenador Interactivo y Nota A1</title>
+
+  <style>
+
+    :root {
+
+      --bg: #f8fafc;
+
+      --card: #ffffff;
+
+      --primary: #2563eb;
+
+      --primary-dark: #1d4ed8;
+
+      --text: #0f172a;
+
+      --muted: #64748b;
+
+      --border: #e2e8f0;
+
+      --ok-bg: #dcfce7;
+
+      --ok-text: #166534;
+
+      --ok-border: #22c55e;
+
+      --rev-bg: #fef9c3;
+
+      --rev-text: #854d0e;
+
+      --rev-border: #eab308;
+
+      --err-bg: #fee2e2;
+
+      --err-text: #991b1b;
+
+      --err-border: #ef4444;
+
+      --radius: 14px;
+
+    }
+
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+    body {
+
+      margin: 0;
+
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+      background: var(--bg);
+
+      color: var(--text);
+
+      line-height: 1.5;
+
+      padding-bottom: 86px;
+
+    }
+
+    header {
+
+      background: #0f172a;
+
+      color: #fff;
+
+      padding: 14px 16px 12px;
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 50;
+
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+
+    }
+
+    .header-top {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 10px;
+
+    }
+
+    header h1 {
+
+      margin: 0;
+
+      font-size: 1.05rem;
+
+      font-weight: 700;
+
+      letter-spacing: -0.01em;
+
+    }
+
+    .badge-score {
+
+      background: #1e293b;
+
+      border: 1.5px solid #38bdf8;
+
+      padding: 6px 12px;
+
+      border-radius: 999px;
+
+      font-size: 0.85rem;
+
+      font-weight: 700;
+
+      color: #38bdf8;
+
+      white-space: nowrap;
+
+      cursor: pointer;
+
+    }
+
+    .badge-score:active { transform: scale(0.97); }
+
+    .progress-bar-wrap {
+
+      margin-top: 9px;
+
+      background: #1e293b;
+
+      height: 7px;
+
+      border-radius: 999px;
+
+      overflow: hidden;
+
+    }
+
+    .progress-bar-fill {
+
+      height: 100%;
+
+      width: 0%;
+
+      background: linear-gradient(90deg, #38bdf8, #22c55e);
+
+      transition: width 0.3s ease;
+
+    }
+
+    .container {
+
+      max-width: 720px;
+
+      margin: 0 auto;
+
+      padding: 14px;
+
+    }
+
+    .score-banner {
+
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+
+      color: #fff;
+
+      border-radius: var(--radius);
+
+      padding: 14px 16px;
+
+      margin-bottom: 14px;
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 12px;
+
+      box-shadow: 0 3px 10px rgba(15,23,42,0.12);
+
+    }
+
+    .score-banner-left {
+
+      flex: 1;
+
+    }
+
+    .score-banner-title {
+
+      font-size: 0.78rem;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.05em;
+
+      color: #93c5fd;
+
+      font-weight: 700;
+
+    }
+
+    .score-banner-pct {
+
+      font-size: 1.5rem;
+
+      font-weight: 800;
+
+      line-height: 1.2;
+
+      margin: 2px 0;
+
+    }
+
+    .score-banner-sub {
+
+      font-size: 0.82rem;
+
+      color: #e2e8f0;
+
+    }
+
+    .btn-report {
+
+      background: #38bdf8;
+
+      color: #0f172a;
+
+      border: none;
+
+      border-radius: 10px;
+
+      padding: 10px 13px;
+
+      font-size: 0.84rem;
+
+      font-weight: 800;
+
+      cursor: pointer;
+
+      white-space: nowrap;
+
+    }
+
+    .controls-card {
+
+      background: var(--card);
+
+      border: 1px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 14px;
+
+      margin-bottom: 12px;
+
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+
+    }
+
+    label.field-label {
+
+      display: block;
+
+      font-size: 0.78rem;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.04em;
+
+      color: var(--muted);
+
+      margin-bottom: 6px;
+
+    }
+
+    select {
+
+      width: 100%;
+
+      padding: 11px 12px;
+
+      font-size: 0.98rem;
+
+      font-weight: 600;
+
+      border: 1.5px solid var(--border);
+
+      border-radius: 10px;
+
+      background: #fff;
+
+      color: var(--text);
+
+      margin-bottom: 12px;
+
+    }
+
+    .tabs {
+
+      display: grid;
+
+      grid-template-columns: repeat(2, 1fr);
+
+      gap: 8px;
+
+    }
+
+    @media (min-width: 560px) {
+
+      .tabs { grid-template-columns: repeat(4, 1fr); }
+
+    }
+
+    .tab-btn {
+
+      border: 1.5px solid var(--border);
+
+      background: #f1f5f9;
+
+      color: #334155;
+
+      padding: 10px 8px;
+
+      border-radius: 10px;
+
+      font-size: 0.85rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      text-align: center;
+
+      transition: all 0.15s ease;
+
+    }
+
+    .tab-btn.active {
+
+      background: var(--primary);
+
+      border-color: var(--primary);
+
+      color: #fff;
+
+      box-shadow: 0 2px 6px rgba(37,99,235,0.28);
+
+    }
+
+    .mode-toolbar {
+
+      display: flex;
+
+      flex-wrap: wrap;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 8px;
+
+      margin-bottom: 10px;
+
+    }
+
+    .mode-summary {
+
+      font-size: 0.88rem;
+
+      color: var(--muted);
+
+      font-weight: 700;
+
+    }
+
+    .toolbar-actions {
+
+      display: flex;
+
+      gap: 6px;
+
+      align-items: center;
+
+      flex-wrap: wrap;
+
+    }
+
+    .filter-pill {
+
+      border: 1px solid var(--border);
+
+      background: #fff;
+
+      padding: 6px 11px;
+
+      border-radius: 999px;
+
+      font-size: 0.8rem;
+
+      font-weight: 600;
+
+      color: var(--text);
+
+      cursor: pointer;
+
+    }
+
+    .filter-pill.active {
+
+      background: #fef3c7;
+
+      border-color: #f59e0b;
+
+      color: #92400e;
+
+    }
+
+    .search-wrap {
+
+      margin-bottom: 12px;
+
+    }
+
+    .search-input {
+
+      width: 100%;
+
+      padding: 9px 12px;
+
+      font-size: 0.92rem;
+
+      border: 1.5px solid var(--border);
+
+      border-radius: 10px;
+
+      background: #fff;
+
+      color: var(--text);
+
+      outline: none;
+
+    }
+
+    .search-input:focus {
+
+      border-color: var(--primary);
+
+    }
+
+    .batch-banner {
+
+      display: none;
+
+      background: #eff6ff;
+
+      border: 1.5px solid #93c5fd;
+
+      color: #1e3a8a;
+
+      border-radius: 10px;
+
+      padding: 10px 12px;
+
+      margin-bottom: 12px;
+
+      font-size: 0.9rem;
+
+      font-weight: 600;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      gap: 8px;
+
+    }
+
+    .batch-banner.show {
+
+      display: flex;
+
+    }
+
+    .ex-card {
+
+      background: var(--card);
+
+      border: 1.5px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 14px;
+
+      margin-bottom: 12px;
+
+      transition: border-color 0.2s, background-color 0.2s;
+
+    }
+
+    .ex-card.is-correct {
+
+      border-color: var(--ok-border);
+
+      background: #f0fdf4;
+
+    }
+
+    .ex-card.is-revealed {
+
+      border-color: var(--rev-border);
+
+      background: #fefce8;
+
+    }
+
+    .ex-card.is-wrong {
+
+      border-color: var(--err-border);
+
+      background: #fef2f2;
+
+    }
+
+    .ex-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: flex-start;
+
+      gap: 8px;
+
+      margin-bottom: 8px;
+
+    }
+
+    .ex-num {
+
+      font-size: 0.78rem;
+
+      font-weight: 800;
+
+      color: var(--primary);
+
+      background: #eff6ff;
+
+      padding: 2px 8px;
+
+      border-radius: 6px;
+
+    }
+
+    .ex-prompt {
+
+      font-size: 1.06rem;
+
+      font-weight: 700;
+
+      color: var(--text);
+
+      margin: 4px 0;
+
+    }
+
+    .ex-pos {
+
+      font-size: 0.83rem;
+
+      font-weight: 500;
+
+      color: var(--muted);
+
+      font-style: italic;
+
+    }
+
+    .ex-sub {
+
+      font-size: 0.88rem;
+
+      color: #475569;
+
+      margin-bottom: 8px;
+
+    }
+
+    .hint-box {
+
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+      font-size: 0.9rem;
+
+      background: #f1f5f9;
+
+      padding: 5px 9px;
+
+      border-radius: 7px;
+
+      display: inline-block;
+
+      margin-bottom: 8px;
+
+      color: #334155;
+
+    }
+
+    .input-row {
+
+      display: flex;
+
+      gap: 8px;
+
+      align-items: stretch;
+
+    }
+
+    input.ans-input {
+
+      flex: 1;
+
+      min-width: 0;
+
+      padding: 11px 12px;
+
+      font-size: 1rem;
+
+      border: 1.5px solid #cbd5e1;
+
+      border-radius: 10px;
+
+      background: #fff;
+
+      color: var(--text);
+
+      outline: none;
+
+    }
+
+    input.ans-input:focus {
+
+      border-color: var(--primary);
+
+      box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+
+    }
+
+    .btn {
+
+      border: none;
+
+      border-radius: 10px;
+
+      padding: 10px 14px;
+
+      font-size: 0.9rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      gap: 5px;
+
+      white-space: nowrap;
+
+    }
+
+    .btn-check {
+
+      background: var(--primary);
+
+      color: #fff;
+
+    }
+
+    .btn-check:active { background: var(--primary-dark); }
+
+    .btn-audio {
+
+      background: #e0f2fe;
+
+      color: #0369a1;
+
+      padding: 6px 10px;
+
+      font-size: 0.82rem;
+
+    }
+
+    .btn-hint {
+
+      background: #f1f5f9;
+
+      color: #475569;
+
+      padding: 6px 10px;
+
+      font-size: 0.82rem;
+
+    }
+
+    .btn-danger {
+
+      background: #fee2e2;
+
+      color: #991b1b;
+
+      border: 1px solid #fca5a5;
+
+      width: 100%;
+
+      margin-top: 12px;
+
+      font-size: 0.84rem;
+
+    }
+
+    .feedback {
+
+      margin-top: 9px;
+
+      padding: 8px 11px;
+
+      border-radius: 8px;
+
+      font-size: 0.9rem;
+
+      font-weight: 600;
+
+      display: none;
+
+    }
+
+    .feedback.ok {
+
+      display: block;
+
+      background: var(--ok-bg);
+
+      color: var(--ok-text);
+
+    }
+
+    .feedback.rev {
+
+      display: block;
+
+      background: var(--rev-bg);
+
+      color: var(--rev-text);
+
+    }
+
+    .feedback.err {
+
+      display: block;
+
+      background: var(--err-bg);
+
+      color: var(--err-text);
+
+    }
+
+    .card-actions {
+
+      display: flex;
+
+      gap: 6px;
+
+      flex-wrap: wrap;
+
+    }
+
+    .bottom-bar {
+
+      position: fixed;
+
+      bottom: 0;
+
+      left: 0;
+
+      right: 0;
+
+      background: #fff;
+
+      border-top: 1px solid var(--border);
+
+      padding: 10px 14px;
+
+      display: flex;
+
+      justify-content: center;
+
+      gap: 10px;
+
+      z-index: 40;
+
+      box-shadow: 0 -2px 10px rgba(0,0,0,0.06);
+
+    }
+
+    .btn-all {
+
+      background: #0f172a;
+
+      color: #fff;
+
+      flex: 1;
+
+      max-width: 240px;
+
+    }
+
+    .btn-reset {
+
+      background: #f1f5f9;
+
+      color: #334155;
+
+      border: 1px solid #cbd5e1;
+
+    }
+
+    .pron-card {
+
+      background: #fff;
+
+      border: 1.5px solid var(--border);
+
+      border-radius: var(--radius);
+
+      padding: 14px;
+
+      margin-bottom: 12px;
+
+    }
+
+    .pron-word {
+
+      font-size: 1.15rem;
+
+      font-weight: 800;
+
+      color: var(--primary-dark);
+
+    }
+
+    .pron-ipa {
+
+      font-family: sans-serif;
+
+      color: #475569;
+
+      font-size: 0.95rem;
+
+      margin-left: 6px;
+
+    }
+
+    .pron-tip {
+
+      margin-top: 6px;
+
+      font-size: 0.93rem;
+
+      color: var(--text);
+
+    }
+
+    .group-banner {
+
+      background: #eff6ff;
+
+      border-left: 4px solid var(--primary);
+
+      padding: 8px 12px;
+
+      font-weight: 700;
+
+      color: #1e3a8a;
+
+      border-radius: 6px;
+
+      margin: 14px 0 10px;
+
+      font-size: 0.95rem;
+
+    }
+
+    .empty-state {
+
+      background: #f0fdf4;
+
+      border: 1.5px solid #86efac;
+
+      border-radius: var(--radius);
+
+      padding: 22px 16px;
+
+      text-align: center;
+
+      color: #166534;
+
+      margin-top: 10px;
+
+    }
+
+    .empty-state h3 {
+
+      margin: 0 0 8px;
+
+      font-size: 1.08rem;
+
+    }
+
+    .modal-overlay {
+
+      position: fixed;
+
+      inset: 0;
+
+      background: rgba(15, 23, 42, 0.72);
+
+      display: none;
+
+      align-items: center;
+
+      justify-content: center;
+
+      padding: 16px;
+
+      z-index: 100;
+
+    }
+
+    .modal-overlay.open {
+
+      display: flex;
+
+    }
+
+    .modal-card {
+
+      background: #fff;
+
+      border-radius: 18px;
+
+      max-width: 540px;
+
+      width: 100%;
+
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      padding: 20px;
+
+      box-shadow: 0 20px 40px rgba(0,0,0,0.28);
+
+    }
+
+    .modal-header {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      border-bottom: 1px solid var(--border);
+
+      padding-bottom: 10px;
+
+      margin-bottom: 14px;
+
+    }
+
+    .modal-header h2 {
+
+      margin: 0;
+
+      font-size: 1.12rem;
+
+    }
+
+    .close-modal {
+
+      background: #f1f5f9;
+
+      border: none;
+
+      width: 32px;
+
+      height: 32px;
+
+      border-radius: 50%;
+
+      font-size: 1.1rem;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+    }
+
+    .big-gauge {
+
+      text-align: center;
+
+      background: #f8fafc;
+
+      border: 1.5px solid var(--border);
+
+      border-radius: 14px;
+
+      padding: 16px;
+
+      margin-bottom: 14px;
+
+    }
+
+    .big-pct {
+
+      font-size: 2.6rem;
+
+      font-weight: 900;
+
+      color: var(--primary);
+
+      line-height: 1.1;
+
+    }
+
+    .rank-pill {
+
+      display: inline-block;
+
+      margin-top: 8px;
+
+      padding: 4px 12px;
+
+      border-radius: 999px;
+
+      font-size: 0.85rem;
+
+      font-weight: 700;
+
+      background: #dbeafe;
+
+      color: #1e40af;
+
+    }
+
+    .stat-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 8px 0;
+
+      border-bottom: 1px solid #f1f5f9;
+
+      font-size: 0.9rem;
+
+    }
+
+    .stat-row:last-child { border-bottom: none; }
+
+    .mini-bar {
+
+      width: 100%;
+
+      height: 6px;
+
+      background: #e2e8f0;
+
+      border-radius: 999px;
+
+      overflow: hidden;
+
+      margin-top: 4px;
+
+    }
+
+    .mini-bar-fill {
+
+      height: 100%;
+
+      background: var(--primary);
+
+    }
+
+    .cat-breakdown-list {
+
+      max-height: 220px;
+
+      overflow-y: auto;
+
+      border: 1px solid var(--border);
+
+      border-radius: 10px;
+
+      padding: 8px 10px;
+
+      margin-top: 8px;
+
+      background: #f8fafc;
+
+    }
+
+    .cat-mini-row {
+
+      display: flex;
+
+      justify-content: space-between;
+
+      align-items: center;
+
+      padding: 5px 4px;
+
+      border-bottom: 1px solid #e2e8f0;
+
+      font-size: 0.83rem;
+
+      cursor: pointer;
+
+    }
+
+    .cat-mini-row:last-child { border-bottom: none; }
+
+    .cat-mini-row:hover { background: #eff6ff; }
+
+  </style>
+
+</head>
+
+<body>
+
+
+<header>
+
+  <div class="header-top">
+
+    <h1>Oxford 3000™ A1 • Práctica</h1>
+
+    <button type="button" class="badge-score" id="globalScore" title="Ver informe de puntuación A1">Nota A1: 0%</button>
+
+  </div>
+
+  <div class="progress-bar-wrap">
+
+    <div class="progress-bar-fill" id="globalProgress"></div>
+
+  </div>
+
+</header>
+
+
+<div class="container">
+
+  <div class="score-banner">
+
+    <div class="score-banner-left">
+
+      <div class="score-banner-title">Puntuación Global Nivel A1</div>
+
+      <div class="score-banner-pct" id="bannerPct">0.0% <span style="font-size:0.92rem; font-weight:600; color:#93c5fd;">• Nivel Inicial</span></div>
+
+      <div class="score-banner-sub" id="bannerSub">0 de 1.915 ejercicios acertados por ti</div>
+
+    </div>
+
+    <button type="button" class="btn-report" id="openReportBtn">Ver Nota %</button>
+
+  </div>
+
+
+  <div class="controls-card">
+
+    <label class="field-label" for="catSelect">Selecciona Tema / Capítulo (21 bloques)</label>
+
+    <select id="catSelect"></select>
+
+
+    <div class="tabs" id="modeTabs">
+
+      <button class="tab-btn active" data-mode="en2es">1. EN &#8594; ES</button>
+
+      <button class="tab-btn" data-mode="es2en">2. ES &#8594; EN</button>
+
+      <button class="tab-btn" data-mode="context">3. Contexto</button>
+
+      <button class="tab-btn" data-mode="pron">4. Pronunciación</button>
+
+    </div>
+
+  </div>
+
+
+  <div class="mode-toolbar" id="toolbar">
+
+    <div class="mode-summary" id="modeSummary">Cargando ejercicios...</div>
+
+    <div class="toolbar-actions">
+
+      <button class="filter-pill" id="togglePendingBtn">Solo pendientes</button>
+
+    </div>
+
+  </div>
+
+
+  <div class="search-wrap" id="searchWrap">
+
+    <input type="search" class="search-input" id="searchInput" placeholder="&#128269; Filtrar palabra en este tema..." autocomplete="off" />
+
+  </div>
+
+
+  <div class="batch-banner" id="batchBanner">
+
+    <span id="batchText"></span>
+
+    <button type="button" class="btn-report" style="padding:6px 10px; font-size:0.8rem;" id="batchModalBtn">Ver Nota %</button>
+
+  </div>
+
+
+  <div id="exerciseContainer"></div>
+
+</div>
+
+
+<div class="bottom-bar" id="bottomBar">
+
+  <button class="btn btn-all" id="checkAllBtn">&#10003; Corregir todo el bloque</button>
+
+  <button class="btn btn-reset" id="resetCatBtn">Reiniciar tema</button>
+
+</div>
+
+
+<div class="modal-overlay" id="scoreModal">
+
+  <div class="modal-card">
+
+    <div class="modal-header">
+
+      <h2>&#127942; Informe de Nivel A1 (0% – 100%)</h2>
+
+      <button type="button" class="close-modal" id="closeModalBtn">&#10005;</button>
+
+    </div>
+
+    <div id="modalBody"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const APP_DATA = {"categories": [{"id": 1, "title": "1. Personas, Familia y Relaciones", "words": [{"en": "cousin", "pos": "n.", "es": "primo/a"}, {"en": "baby", "pos": "n.", "es": "bebé"}, {"en": "dad", "pos": "n.", "es": "papá"}, {"en": "teenager", "pos": "n.", "es": "adolescente"}, {"en": "member", "pos": "n.", "es": "miembro, socio/a"}, {"en": "married", "pos": "adj.", "es": "casado/a"}, {"en": "parent", "pos": "n.", "es": "padre o madre (progenitor)"}, {"en": "daughter", "pos": "n.", "es": "hija"}, {"en": "born", "pos": "v.", "es": "nacido/a"}, {"en": "people", "pos": "n.", "es": "gente, personas"}, {"en": "husband", "pos": "n.", "es": "marido, esposo"}, {"en": "name", "pos": "n., v.", "es": "nombre / nombrar"}, {"en": "man", "pos": "n.", "es": "hombre"}, {"en": "grandmother", "pos": "n.", "es": "abuela"}, {"en": "family", "pos": "n., adj.", "es": "familia"}, {"en": "sister", "pos": "n.", "es": "hermana"}, {"en": "son", "pos": "n.", "es": "hijo"}, {"en": "mother", "pos": "n.", "es": "madre"}, {"en": "father", "pos": "n.", "es": "padre"}, {"en": "life", "pos": "n.", "es": "vida"}, {"en": "group", "pos": "n.", "es": "grupo"}, {"en": "partner", "pos": "n.", "es": "pareja, socio/a, compañero/a"}, {"en": "uncle", "pos": "n.", "es": "tío"}, {"en": "neighbour", "pos": "n.", "es": "vecino/a"}, {"en": "grandparent", "pos": "n.", "es": "abuelo/a"}, {"en": "girlfriend", "pos": "n.", "es": "novia"}, {"en": "woman", "pos": "n.", "es": "mujer"}, {"en": "person", "pos": "n.", "es": "persona"}, {"en": "aunt", "pos": "n.", "es": "tía"}, {"en": "adult", "pos": "n.", "es": "adulto/a"}, {"en": "wife", "pos": "n.", "es": "esposa, mujer"}, {"en": "mum", "pos": "n.", "es": "mamá"}, {"en": "boy", "pos": "n.", "es": "chico, niño"}, {"en": "boyfriend", "pos": "n.", "es": "novio"}, {"en": "child", "pos": "n.", "es": "niño/a, hijo/a"}, {"en": "friend", "pos": "n.", "es": "amigo/a"}, {"en": "girl", "pos": "n.", "es": "chica, niña"}, {"en": "grandfather", "pos": "n.", "es": "abuelo"}, {"en": "age", "pos": "n.", "es": "edad"}, {"en": "brother", "pos": "n.", "es": "hermano"}], "context": [{"sentence": "My ______ and I are moving to Rotterdam next month.", "translation": "Mi pareja y yo nos mudamos a Róterdam el mes que viene.", "answer": "partner"}, {"sentence": "Our new ______ in Utrecht is very friendly.", "translation": "Nuestro nuevo vecino en Utrecht es muy amable.", "answer": "neighbour"}, {"sentence": "How many ______ work in your department?", "translation": "¿Cuántas personas trabajan en tu departamento?", "answer": "people"}, {"sentence": "She is a young ______ with two children.", "translation": "Ella es una mujer joven con dos hijos.", "answer": "woman"}, {"sentence": "I live with my ______ and our baby.", "translation": "Vivo con mi esposa y nuestro bebé.", "answer": "wife"}], "pronunciation": [{"word": "daughter", "ipa": "/ˈdɔːtə/", "tip": "dó-ter (la 'gh' es muda)"}, {"word": "neighbour", "ipa": "/ˈneɪbə/", "tip": "néi-ber (la 'gh' es muda)"}, {"word": "woman / women", "ipa": "/ˈwʊmən/ /ˈwɪmɪn/", "tip": "wú-man (singular) / wí-min (plural)"}, {"word": "cousin", "ipa": "/ˈkʌzn/", "tip": "ká-zn (la 'ou' suena como 'a' corta)"}]}, {"id": 2, "title": "2. Trabajo, Profesiones y Negocios", "words": [{"en": "plan", "pos": "n., v.", "es": "plan / planear"}, {"en": "rule", "pos": "n.", "es": "regla, norma"}, {"en": "actor", "pos": "n.", "es": "actor"}, {"en": "teacher", "pos": "n.", "es": "profesor/a, maestro/a"}, {"en": "nurse", "pos": "n.", "es": "enfermero/a"}, {"en": "project", "pos": "n.", "es": "proyecto"}, {"en": "actress", "pos": "n.", "es": "actriz"}, {"en": "chart", "pos": "n.", "es": "gráfico, tabla"}, {"en": "writer", "pos": "n.", "es": "escritor/a"}, {"en": "problem", "pos": "n.", "es": "problema"}, {"en": "design", "pos": "n., v.", "es": "diseño / diseñar"}, {"en": "machine", "pos": "n.", "es": "máquina"}, {"en": "form", "pos": "n., v.", "es": "formulario / formar"}, {"en": "worker", "pos": "n.", "es": "trabajador/a"}, {"en": "driver", "pos": "n.", "es": "conductor/a"}, {"en": "customer", "pos": "n.", "es": "cliente"}, {"en": "report", "pos": "n.", "es": "informe, reportaje"}, {"en": "scientist", "pos": "n.", "es": "científico/a"}, {"en": "career", "pos": "n.", "es": "carrera profesional"}, {"en": "success", "pos": "n.", "es": "éxito"}, {"en": "singer", "pos": "n.", "es": "cantante"}, {"en": "job", "pos": "n.", "es": "trabajo, empleo"}, {"en": "situation", "pos": "n.", "es": "situación"}, {"en": "result", "pos": "n.", "es": "resultado"}, {"en": "doctor", "pos": "n.", "es": "médico/a, doctor/a"}, {"en": "policeman", "pos": "n.", "es": "policía (agente)"}, {"en": "model", "pos": "n.", "es": "modelo"}, {"en": "company", "pos": "n.", "es": "empresa, compañía"}, {"en": "skill", "pos": "n.", "es": "habilidad, destreza"}, {"en": "dancer", "pos": "n.", "es": "bailarín/a"}, {"en": "farmer", "pos": "n.", "es": "granjero/a, agricultor/a"}, {"en": "work", "pos": "v., n.", "es": "trabajo / trabajar"}, {"en": "artist", "pos": "n.", "es": "artista"}, {"en": "waiter", "pos": "n.", "es": "camarero/a, mesero/a"}, {"en": "business", "pos": "n.", "es": "negocio, empresa"}, {"en": "office", "pos": "n.", "es": "oficina"}, {"en": "interview", "pos": "n., v.", "es": "entrevista / entrevistar"}, {"en": "team", "pos": "n.", "es": "equipo"}, {"en": "meeting", "pos": "n.", "es": "reunión"}, {"en": "product", "pos": "n.", "es": "producto"}], "context": [{"sentence": "I have a job ______ at a Dutch company tomorrow.", "translation": "Tengo una entrevista de trabajo en una empresa holandesa mañana.", "answer": "interview"}, {"sentence": "The ______ starts at nine o'clock every morning.", "translation": "La reunión empieza a las nueve en punto cada mañana.", "answer": "meeting"}, {"sentence": "Please read the safety ______ before using this machine.", "translation": "Por favor, lee la norma de seguridad antes de usar esta máquina.", "answer": "rule"}, {"sentence": "Every ______ needs good communication skills.", "translation": "Todo trabajador necesita buenas habilidades de comunicación.", "answer": "worker"}, {"sentence": "Our ______ is in the centre of Amsterdam.", "translation": "Nuestra oficina está en el centro de Ámsterdam.", "answer": "office"}], "pronunciation": [{"word": "business", "ipa": "/ˈbɪznəs/", "tip": "bíz-nes (tiene 2 sílabas, la 'u' suena 'i' y la 'i' desaparece)"}, {"word": "worker", "ipa": "/ˈwɜːkə/", "tip": "wér-ker (la 'o' tras 'w' suena como 'e' larga)"}, {"word": "customer", "ipa": "/ˈkʌstəmə/", "tip": "kás-to-mer (acento en la primera sílaba)"}, {"word": "design", "ipa": "/dɪˈzaɪn/", "tip": "di-záin (la 'g' es muda y la 'i' suena 'ai')"}]}, {"id": 3, "title": "3. Educación, Idiomas y Estudio", "words": [{"en": "spelling", "pos": "n.", "es": "ortografía, deletreo"}, {"en": "student", "pos": "n.", "es": "estudiante"}, {"en": "dictionary", "pos": "n.", "es": "diccionario"}, {"en": "section", "pos": "n.", "es": "sección, apartado"}, {"en": "teach", "pos": "v.", "es": "enseñar"}, {"en": "science", "pos": "n.", "es": "ciencia"}, {"en": "description", "pos": "n.", "es": "descripción"}, {"en": "subject", "pos": "n.", "es": "asignatura, tema, sujeto"}, {"en": "spell", "pos": "v.", "es": "deletrear"}, {"en": "meaning", "pos": "n.", "es": "significado"}, {"en": "statement", "pos": "n.", "es": "afirmación, declaración"}, {"en": "paragraph", "pos": "n.", "es": "párrafo"}, {"en": "paper", "pos": "n.", "es": "papel"}, {"en": "write", "pos": "v.", "es": "escribir"}, {"en": "phrase", "pos": "n.", "es": "frase, expresión"}, {"en": "note", "pos": "n.", "es": "nota, apunte"}, {"en": "letter", "pos": "n.", "es": "carta, letra"}, {"en": "information", "pos": "n.", "es": "información"}, {"en": "kind (type)", "pos": "n.", "es": "tipo, clase"}, {"en": "article", "pos": "n.", "es": "artículo"}, {"en": "reading", "pos": "n.", "es": "lectura"}, {"en": "class", "pos": "n.", "es": "clase"}, {"en": "university", "pos": "n.", "es": "universidad"}, {"en": "word", "pos": "n.", "es": "palabra"}, {"en": "topic", "pos": "n.", "es": "tema"}, {"en": "school", "pos": "n.", "es": "escuela, colegio"}, {"en": "reader", "pos": "n.", "es": "lector/a"}, {"en": "geography", "pos": "n.", "es": "geografía"}, {"en": "exam", "pos": "n.", "es": "examen"}, {"en": "learn", "pos": "v.", "es": "aprender"}, {"en": "lesson", "pos": "n.", "es": "lección, clase"}, {"en": "mistake", "pos": "n.", "es": "error, equivocación"}, {"en": "type", "pos": "n.", "es": "tipo, clase"}, {"en": "example", "pos": "n.", "es": "ejemplo"}, {"en": "fact", "pos": "n.", "es": "hecho, dato"}, {"en": "page", "pos": "n.", "es": "página"}, {"en": "point", "pos": "n.", "es": "punto, señalar"}, {"en": "homework", "pos": "n.", "es": "deberes, tarea escolar"}, {"en": "difference", "pos": "n.", "es": "diferencia"}, {"en": "practise", "pos": "v.", "es": "practicar"}, {"en": "pen", "pos": "n.", "es": "bolígrafo"}, {"en": "sentence", "pos": "n.", "es": "oración, frase"}, {"en": "dialogue", "pos": "n.", "es": "diálogo"}, {"en": "practice", "pos": "n.", "es": "práctica"}, {"en": "college", "pos": "n.", "es": "universidad, facultad"}, {"en": "writing", "pos": "n.", "es": "escritura"}, {"en": "story", "pos": "n.", "es": "historia, cuento"}, {"en": "study", "pos": "n., v.", "es": "estudio / estudiar"}, {"en": "course", "pos": "n.", "es": "curso, plato (comida)"}, {"en": "read", "pos": "v.", "es": "leer"}, {"en": "text", "pos": "n.", "es": "texto, mensaje de texto"}, {"en": "classroom", "pos": "n.", "es": "aula, salón de clase"}, {"en": "history", "pos": "n.", "es": "historia"}, {"en": "language", "pos": "n.", "es": "idioma, lengua"}, {"en": "test", "pos": "n., v.", "es": "examen, prueba / probar"}, {"en": "title", "pos": "n.", "es": "título"}, {"en": "list", "pos": "n., v.", "es": "lista / hacer una lista"}, {"en": "detail", "pos": "n.", "es": "detalle"}, {"en": "book", "pos": "n.", "es": "libro"}, {"en": "pencil", "pos": "n.", "es": "lápiz"}], "context": [{"sentence": "I ______ English every evening on my Kindle.", "translation": "Estudio inglés cada tarde-noche en mi Kindle.", "answer": "study"}, {"sentence": "Could you ______ that word, please?", "translation": "¿Podrías deletrear esa palabra, por favor?", "answer": "spell"}, {"sentence": "Don't worry if you make a ______ when you speak.", "translation": "No te preocupes si cometes un error al hablar.", "answer": "mistake"}, {"sentence": "This ______ is very useful for learning new words.", "translation": "Este diccionario es muy útil para aprender palabras nuevas.", "answer": "dictionary"}, {"sentence": "Please write a short ______ about your experience.", "translation": "Por favor, escribe un párrafo corto sobre tu experiencia.", "answer": "paragraph"}], "pronunciation": [{"word": "language", "ipa": "/ˈlæŋɡwɪdʒ/", "tip": "lán-güich (termina con sonido 'ch/y' suave)"}, {"word": "science", "ipa": "/ˈsaɪəns/", "tip": "sái-ens (la 'c' tras 's' es muda)"}, {"word": "dictionary", "ipa": "/ˈdɪkʃənri/", "tip": "dík-shon-ri (la 'ti' suena como 'sh')"}, {"word": "answer", "ipa": "/ˈɑːnsə/", "tip": "án-ser (la 'w' es completamente muda)"}]}, {"id": 4, "title": "4. Comida, Bebida y Restaurantes", "words": [{"en": "apple", "pos": "n.", "es": "manzana"}, {"en": "tea", "pos": "n.", "es": "té"}, {"en": "cup", "pos": "n.", "es": "taza"}, {"en": "ice cream", "pos": "n.", "es": "helado"}, {"en": "cooking", "pos": "n.", "es": "cocina (acción de cocinar)"}, {"en": "cook", "pos": "v.", "es": "cocinar"}, {"en": "chicken", "pos": "n.", "es": "pollo"}, {"en": "egg", "pos": "n.", "es": "huevo"}, {"en": "bread", "pos": "n.", "es": "pan"}, {"en": "food", "pos": "n.", "es": "comida, alimento"}, {"en": "cake", "pos": "n.", "es": "pastel, tarta"}, {"en": "potato", "pos": "n.", "es": "patata, papa"}, {"en": "sugar", "pos": "n.", "es": "azúcar"}, {"en": "meat", "pos": "n.", "es": "carne"}, {"en": "butter", "pos": "n.", "es": "mantequilla"}, {"en": "eat", "pos": "v.", "es": "comer"}, {"en": "banana", "pos": "n.", "es": "plátano, banana"}, {"en": "drink", "pos": "n., v.", "es": "bebida / beber"}, {"en": "salad", "pos": "n.", "es": "ensalada"}, {"en": "vegetable", "pos": "n.", "es": "verdura, vegetal"}, {"en": "water", "pos": "n.", "es": "agua"}, {"en": "cafe", "pos": "n.", "es": "cafetería"}, {"en": "dish", "pos": "n.", "es": "plato (recipiente o comida)"}, {"en": "fish", "pos": "n.", "es": "pez, pescado"}, {"en": "diet", "pos": "n.", "es": "dieta, alimentación"}, {"en": "glass", "pos": "n.", "es": "vaso, copa, cristal"}, {"en": "breakfast", "pos": "n.", "es": "desayuno"}, {"en": "wine", "pos": "n.", "es": "vino"}, {"en": "beer", "pos": "n.", "es": "cerveza"}, {"en": "cream", "pos": "n.", "es": "crema, nata"}, {"en": "pepper", "pos": "n.", "es": "pimienta, pimiento"}, {"en": "tomato", "pos": "n.", "es": "tomate"}, {"en": "cheese", "pos": "n.", "es": "queso"}, {"en": "meal", "pos": "n.", "es": "comida (desayuno, almuerzo, cena)"}, {"en": "juice", "pos": "n.", "es": "zumo, jugo"}, {"en": "onion", "pos": "n.", "es": "cebolla"}, {"en": "order", "pos": "n., v.", "es": "pedido, orden / pedir, ordenar"}, {"en": "dinner", "pos": "n.", "es": "cena"}, {"en": "restaurant", "pos": "n.", "es": "restaurante"}, {"en": "menu", "pos": "n.", "es": "menú, carta"}, {"en": "orange", "pos": "n., adj.", "es": "naranja"}, {"en": "bottle", "pos": "n.", "es": "botella"}, {"en": "coffee", "pos": "n.", "es": "café"}, {"en": "delicious", "pos": "adj.", "es": "delicioso/a"}, {"en": "chocolate", "pos": "n.", "es": "chocolate"}, {"en": "carrot", "pos": "n.", "es": "zanahoria"}, {"en": "lunch", "pos": "n.", "es": "almuerzo, comida"}, {"en": "sandwich", "pos": "n.", "es": "sándwich, bocadillo"}, {"en": "rice", "pos": "n.", "es": "arroz"}, {"en": "milk", "pos": "n.", "es": "leche"}, {"en": "soup", "pos": "n.", "es": "sopa"}, {"en": "salt", "pos": "n.", "es": "sal"}, {"en": "fruit", "pos": "n.", "es": "fruta"}], "context": [{"sentence": "Can I have the ______, please? I want to order lunch.", "translation": "Me puede traer el menú, por favor? Quiero pedir el almuerzo.", "answer": "menu"}, {"sentence": "In the Netherlands, many people eat a ______ for lunch.", "translation": "En los Países Bajos, mucha gente come un sándwich para almorzar.", "answer": "sandwich"}, {"sentence": "Would you like ______ or tea during the break?", "translation": "¿Te gustaría café o té durante el descanso?", "answer": "coffee"}, {"sentence": "This Dutch ______ is delicious!", "translation": "¡Este queso holandés está delicioso!", "answer": "cheese"}, {"sentence": "I usually cook ______ with vegetables for dinner.", "translation": "Normalmente cocino pollo con verduras para cenar.", "answer": "chicken"}], "pronunciation": [{"word": "vegetable", "ipa": "/ˈvedʒtəbl/", "tip": "véch-ta-bol (3 sílabas, no 4: se omite la segunda 'e')"}, {"word": "chocolate", "ipa": "/ˈtʃɒklət/", "tip": "chók-lat (2 sílabas, la segunda 'o' no suena)"}, {"word": "juice / fruit", "ipa": "/dʒuːs/ /fruːt/", "tip": "yús / frút (la 'i' es muda en ambas)"}, {"word": "sandwich", "ipa": "/ˈsænwɪtʃ/", "tip": "sán-wich (la 'd' casi no se pronuncia)"}]}, {"id": 5, "title": "5. Casa, Hogar y Objetos Cotidianos", "words": [{"en": "chair", "pos": "n.", "es": "silla"}, {"en": "table", "pos": "n.", "es": "mesa, tabla"}, {"en": "door", "pos": "n.", "es": "puerta"}, {"en": "clock", "pos": "n.", "es": "reloj (de pared/mesa)"}, {"en": "thing", "pos": "n.", "es": "cosa"}, {"en": "live", "pos": "v.", "es": "vivir"}, {"en": "house", "pos": "n.", "es": "casa"}, {"en": "floor", "pos": "n.", "es": "suelo, piso (planta)"}, {"en": "light (from the sun/a lamp)", "pos": "n., adj.", "es": "luz / claro/a"}, {"en": "shower", "pos": "n.", "es": "ducha"}, {"en": "key", "pos": "n., adj.", "es": "llave / clave"}, {"en": "room", "pos": "n.", "es": "habitación, sala"}, {"en": "bathroom", "pos": "n.", "es": "cuarto de baño"}, {"en": "flat", "pos": "n.", "es": "piso, apartamento"}, {"en": "window", "pos": "n.", "es": "ventana"}, {"en": "bed", "pos": "n.", "es": "cama"}, {"en": "toilet", "pos": "n.", "es": "baño, inodoro, aseo"}, {"en": "garden", "pos": "n.", "es": "jardín"}, {"en": "kitchen", "pos": "n.", "es": "cocina (habitación)"}, {"en": "home", "pos": "n., adv.", "es": "hogar, casa"}, {"en": "box", "pos": "n.", "es": "caja"}, {"en": "wall", "pos": "n.", "es": "pared, muro"}, {"en": "object", "pos": "n.", "es": "objeto"}, {"en": "bedroom", "pos": "n.", "es": "dormitorio, habitación"}, {"en": "downstairs", "pos": "adv.", "es": "abajo (en el piso inferior)"}, {"en": "apartment", "pos": "n.", "es": "apartamento, piso"}, {"en": "bath", "pos": "n.", "es": "baño, bañera"}, {"en": "desk", "pos": "n.", "es": "escritorio, pupitre"}, {"en": "upstairs", "pos": "adv.", "es": "arriba (en el piso superior)"}], "context": [{"sentence": "We are looking for a small ______ near the train station.", "translation": "Buscamos un apartamento pequeño cerca de la estación de tren.", "answer": "apartment", "altAnswers": ["flat"]}, {"sentence": "Don't forget your ______ when you leave the house.", "translation": "No olvides tu llave cuando salgas de casa.", "answer": "key"}, {"sentence": "The ______ is upstairs, next to the bedroom.", "translation": "El cuarto de baño está arriba, al lado del dormitorio.", "answer": "bathroom"}, {"sentence": "Put the documents on my ______, please.", "translation": "Pon los documentos encima de mi escritorio, por favor.", "answer": "desk"}, {"sentence": "I ______ in Eindhoven with two colleagues.", "translation": "Vivo en Eindhoven con dos compañeros.", "answer": "live"}], "pronunciation": [{"word": "kitchen", "ipa": "/ˈkɪtʃɪn/", "tip": "kí-chin (acento en la primera sílaba)"}, {"word": "shower", "ipa": "/ˈʃaʊə/", "tip": "sháu-er (la 'sh' suena suave como al pedir silencio)"}, {"word": "key", "ipa": "/kiː/", "tip": "kí (suena igual que 'quai' o 'ki', nunca 'kei')"}, {"word": "clothes", "ipa": "/kləʊðz/", "tip": "klóudz (una sola sílaba)"}]}, {"id": 6, "title": "6. Ropa, Compras y Dinero", "words": [{"en": "sell", "pos": "v.", "es": "vender"}, {"en": "rich", "pos": "adj.", "es": "rico/a (dinero/sabor)"}, {"en": "pay", "pos": "v.", "es": "pagar"}, {"en": "jacket", "pos": "n.", "es": "chaqueta"}, {"en": "clothes", "pos": "n.", "es": "ropa"}, {"en": "cent", "pos": "n.", "es": "céntimo, centavo"}, {"en": "wear", "pos": "v.", "es": "llevar puesto (ropa)"}, {"en": "spend", "pos": "v.", "es": "gastar (dinero), pasar (tiempo)"}, {"en": "trousers", "pos": "n.", "es": "pantalones"}, {"en": "sweater", "pos": "n.", "es": "suéter, jersey"}, {"en": "expensive", "pos": "adj.", "es": "caro/a"}, {"en": "cost", "pos": "n., v.", "es": "coste / costar"}, {"en": "shoe", "pos": "n.", "es": "zapato"}, {"en": "card", "pos": "n.", "es": "tarjeta"}, {"en": "T-shirt", "pos": "n.", "es": "camiseta"}, {"en": "buy", "pos": "v.", "es": "comprar"}, {"en": "bag", "pos": "n.", "es": "bolso, bolsa, mochila"}, {"en": "shopping", "pos": "n.", "es": "compras"}, {"en": "money", "pos": "n.", "es": "dinero"}, {"en": "skirt", "pos": "n.", "es": "falda"}, {"en": "jeans", "pos": "n.", "es": "vaqueros, jeans"}, {"en": "pound", "pos": "n.", "es": "libra (moneda/peso)"}, {"en": "dress", "pos": "n., v.", "es": "vestido / vestirse"}, {"en": "shop", "pos": "n., v.", "es": "tienda / ir de compras"}, {"en": "shirt", "pos": "n.", "es": "camisa"}, {"en": "boot", "pos": "n.", "es": "bota"}, {"en": "coat", "pos": "n.", "es": "abrigo"}, {"en": "dollar", "pos": "n.", "es": "dólar"}, {"en": "euro", "pos": "n.", "es": "euro"}, {"en": "cheap", "pos": "adj.", "es": "barato/a"}, {"en": "price", "pos": "n.", "es": "precio"}, {"en": "bill", "pos": "n.", "es": "factura, cuenta"}, {"en": "umbrella", "pos": "n.", "es": "paraguas"}, {"en": "hat", "pos": "n.", "es": "sombrero, gorro"}, {"en": "poor", "pos": "adj.", "es": "pobre"}], "context": [{"sentence": "How much does a train ticket ______?", "translation": "¿Cuánto cuesta un billete de tren?", "answer": "cost"}, {"sentence": "You can ______ by card in almost every shop in Holland.", "translation": "Puedes pagar con tarjeta en casi todas las tiendas de Holanda.", "answer": "pay"}, {"sentence": "Bring a warm ______ and an umbrella; it rains a lot!", "translation": "¡Trae un abrigo calentito y un paraguas; llueve mucho!", "answer": "coat"}, {"sentence": "This supermarket is very ______ and close to my flat.", "translation": "Este supermercado es muy barato y está cerca de mi piso.", "answer": "cheap"}, {"sentence": "Can I have the ______, please?", "translation": "¿Me trae la cuenta/factura, por favor?", "answer": "bill"}], "pronunciation": [{"word": "buy", "ipa": "/baɪ/", "tip": "bái (la 'u' es muda)"}, {"word": "money", "ipa": "/ˈmʌni/", "tip": "má-ni (la 'o' suena 'a' corta)"}, {"word": "shoe", "ipa": "/ʃuː/", "tip": "shú (no suena 'shoe' como se escribe)"}, {"word": "trousers", "ipa": "/ˈtraʊzəz/", "tip": "tráu-zers"}]}, {"id": 7, "title": "7. Ciudad, Lugares y Servicios", "words": [{"en": "street", "pos": "n.", "es": "calle"}, {"en": "library", "pos": "n.", "es": "biblioteca"}, {"en": "theatre", "pos": "n.", "es": "teatro"}, {"en": "post", "pos": "n., v.", "es": "correo, publicación / enviar"}, {"en": "centre", "pos": "n.", "es": "centro"}, {"en": "capital", "pos": "n., adj.", "es": "capital"}, {"en": "village", "pos": "n.", "es": "pueblo, aldea"}, {"en": "area", "pos": "n.", "es": "área, zona"}, {"en": "bank (money)", "pos": "n.", "es": "banco (dinero)"}, {"en": "town", "pos": "n.", "es": "pueblo, ciudad pequeña"}, {"en": "club", "pos": "n.", "es": "club"}, {"en": "building", "pos": "n.", "es": "edificio"}, {"en": "place", "pos": "n.", "es": "lugar, sitio"}, {"en": "park", "pos": "n., v.", "es": "parque / aparcar"}, {"en": "city", "pos": "n.", "es": "ciudad"}, {"en": "museum", "pos": "n.", "es": "museo"}, {"en": "hospital", "pos": "n.", "es": "hospital"}, {"en": "market", "pos": "n.", "es": "mercado"}, {"en": "cinema", "pos": "n.", "es": "cine"}, {"en": "supermarket", "pos": "n.", "es": "supermercado"}, {"en": "country", "pos": "n.", "es": "país, campo"}, {"en": "address", "pos": "n.", "es": "dirección (postal)"}, {"en": "police", "pos": "n.", "es": "policía"}, {"en": "local", "pos": "adj.", "es": "local"}], "context": [{"sentence": "I need to open an account at a local ______.", "translation": "Necesito abrir una cuenta en un banco local.", "answer": "bank (money)"}, {"sentence": "The ______ is on the corner of the main street.", "translation": "El supermercado está en la esquina de la calle principal.", "answer": "supermarket"}, {"sentence": "What is your new ______ in The Hague?", "translation": "¿Cuál es tu nueva dirección en La Haya?", "answer": "address"}, {"sentence": "Amsterdam is the ______ city of the Netherlands.", "translation": "Ámsterdam es la ciudad capital de los Países Bajos.", "answer": "capital"}, {"sentence": "You can borrow English books for free at the ______.", "translation": "Puedes tomar prestados libros en inglés gratis en la biblioteca.", "answer": "library"}], "pronunciation": [{"word": "library", "ipa": "/ˈlaɪbrəri/", "tip": "lái-bra-ri (fíjate en las dos 'r')"}, {"word": "building", "ipa": "/ˈbɪldɪŋ/", "tip": "bíl-ding (la 'u' es muda)"}, {"word": "theatre", "ipa": "/ˈθɪətə/", "tip": "zí-a-ter (con 'z' española suave al inicio)"}, {"word": "police", "ipa": "/pəˈliːs/", "tip": "po-lís (acento en la segunda sílaba, 'i' larga)"}]}, {"id": 8, "title": "8. Viajes, Transporte y Direcciones", "words": [{"en": "far", "pos": "adv.", "es": "lejos"}, {"en": "car", "pos": "n.", "es": "coche, auto"}, {"en": "traffic", "pos": "n.", "es": "tráfico"}, {"en": "front", "pos": "n., adj.", "es": "frente, parte delantera"}, {"en": "airport", "pos": "n.", "es": "aeropuerto"}, {"en": "map", "pos": "n.", "es": "mapa"}, {"en": "bicycle", "pos": "n.", "es": "bicicleta"}, {"en": "taxi", "pos": "n.", "es": "taxi"}, {"en": "flight", "pos": "n.", "es": "vuelo"}, {"en": "visitor", "pos": "n.", "es": "visitante"}, {"en": "opposite", "pos": "adj., n., prep., adv.", "es": "enfrente de, opuesto/a"}, {"en": "fly", "pos": "v.", "es": "volar"}, {"en": "arrive", "pos": "v.", "es": "llegar"}, {"en": "ride", "pos": "v.", "es": "montar (en bici/caballo)"}, {"en": "boat", "pos": "n.", "es": "barco, bote"}, {"en": "stay", "pos": "v.", "es": "quedarse, alojarse"}, {"en": "passport", "pos": "n.", "es": "pasaporte"}, {"en": "road", "pos": "n.", "es": "carretera, camino, calle"}, {"en": "ticket", "pos": "n.", "es": "billete, entrada, boleto"}, {"en": "trip", "pos": "n.", "es": "viaje, excursión"}, {"en": "visit", "pos": "v., n.", "es": "visitar / visita"}, {"en": "return", "pos": "v., n.", "es": "volver, devolver / regreso"}, {"en": "vacation", "pos": "n.", "es": "vacaciones"}, {"en": "bus", "pos": "n.", "es": "autobús"}, {"en": "hotel", "pos": "n.", "es": "hotel"}, {"en": "line", "pos": "n.", "es": "línea, fila, cola"}, {"en": "holiday", "pos": "n.", "es": "vacaciones, día festivo"}, {"en": "left", "pos": "adj., adv., n.", "es": "izquierda / izquierdo/a"}, {"en": "plane", "pos": "n.", "es": "avión"}, {"en": "right", "pos": "adj., adv., n.", "es": "derecha / correcto/a / derecho"}, {"en": "near", "pos": "prep., adj., adv.", "es": "cerca de, cercano/a"}, {"en": "south", "pos": "n., adj., adv.", "es": "sur"}, {"en": "north", "pos": "n., adj., adv.", "es": "norte"}, {"en": "west", "pos": "n., adj., adv.", "es": "oeste"}, {"en": "travel", "pos": "v., n.", "es": "viajar / viaje"}, {"en": "east", "pos": "n., adj., adv.", "es": "este (punto cardinal)"}, {"en": "way", "pos": "n.", "es": "camino, manera, forma"}, {"en": "drive", "pos": "v.", "es": "conducir, manejar"}, {"en": "journey", "pos": "n.", "es": "viaje, trayecto"}, {"en": "train", "pos": "n.", "es": "tren"}, {"en": "bike", "pos": "n.", "es": "bici, bicicleta"}, {"en": "station", "pos": "n.", "es": "estación (tren/bus)"}, {"en": "tourist", "pos": "n.", "es": "turista"}], "context": [{"sentence": "Everyone rides a ______ to work in Dutch cities.", "translation": "Todo el mundo va en bicicleta al trabajo en las ciudades holandesas.", "answer": "bicycle", "altAnswers": ["bike"]}, {"sentence": "Take the ______ from Schiphol Airport to the city centre.", "translation": "Toma el tren desde el aeropuerto de Schiphol hasta el centro.", "answer": "train"}, {"sentence": "Turn ______ at the traffic lights, and the office is on your right.", "translation": "Gira a la izquierda en el semáforo y la oficina está a tu derecha.", "answer": "left"}, {"sentence": "Show your ______ at the airport check-in desk.", "translation": "Muestra tu pasaporte en el mostrador de facturación del aeropuerto.", "answer": "passport"}, {"sentence": "Buy your ______ before you get on the bus.", "translation": "Compra tu billete antes de subir al autobús.", "answer": "ticket"}], "pronunciation": [{"word": "journey", "ipa": "/ˈdʒɜːni/", "tip": "yér-ni (la 'ou' suena 'e' larga)"}, {"word": "bicycle", "ipa": "/ˈbaɪsɪkl/", "tip": "bái-si-kol (la primera 'i' es 'ai' y la segunda 'i' corta)"}, {"word": "right", "ipa": "/raɪt/", "tip": "ráit (la 'gh' es muda)"}, {"word": "tourist", "ipa": "/ˈtʊərɪst/", "tip": "tú-rist"}]}, {"id": 9, "title": "9. Tiempo, Fechas, Días y Meses", "words": [{"en": "winter", "pos": "n.", "es": "invierno"}, {"en": "later", "pos": "adv.", "es": "más tarde, luego"}, {"en": "May", "pos": "n.", "es": "mayo"}, {"en": "o’clock", "pos": "adv.", "es": "en punto"}, {"en": "Thursday", "pos": "n.", "es": "jueves"}, {"en": "moment", "pos": "n.", "es": "momento"}, {"en": "September", "pos": "n.", "es": "septiembre"}, {"en": "December", "pos": "n.", "es": "diciembre"}, {"en": "soon", "pos": "adv.", "es": "pronto"}, {"en": "night", "pos": "n.", "es": "noche"}, {"en": "next", "pos": "adj., adv.", "es": "siguiente, próximo/a"}, {"en": "end", "pos": "n., v.", "es": "fin, final / terminar"}, {"en": "Saturday", "pos": "n.", "es": "sábado"}, {"en": "summer", "pos": "n.", "es": "verano"}, {"en": "day", "pos": "n.", "es": "día"}, {"en": "year", "pos": "n.", "es": "año"}, {"en": "Tuesday", "pos": "n.", "es": "martes"}, {"en": "weekend", "pos": "n.", "es": "fin de semana"}, {"en": "now", "pos": "adv.", "es": "ahora"}, {"en": "present", "pos": "adj., n.", "es": "regalo, presente / actual"}, {"en": "January", "pos": "n.", "es": "enero"}, {"en": "October", "pos": "n.", "es": "octubre"}, {"en": "spring", "pos": "n.", "es": "primavera"}, {"en": "morning", "pos": "n.", "es": "mañana (parte del día)"}, {"en": "Sunday", "pos": "n.", "es": "domingo"}, {"en": "century", "pos": "n.", "es": "siglo"}, {"en": "past", "pos": "adj., n., prep.", "es": "pasado / más allá de"}, {"en": "July", "pos": "n.", "es": "julio"}, {"en": "afternoon", "pos": "n.", "es": "tarde (mediodía hasta ~18h)"}, {"en": "second (unit of time)", "pos": "n.", "es": "segundo (tiempo)"}, {"en": "birthday", "pos": "n.", "es": "cumpleaños"}, {"en": "Friday", "pos": "n.", "es": "viernes"}, {"en": "period", "pos": "n.", "es": "periodo, punto (ortografía)"}, {"en": "April", "pos": "n.", "es": "abril"}, {"en": "autumn", "pos": "n.", "es": "otoño"}, {"en": "February", "pos": "n.", "es": "febrero"}, {"en": "late", "pos": "adj., adv.", "es": "tarde (con retraso)"}, {"en": "tonight", "pos": "adv., n.", "es": "esta noche"}, {"en": "November", "pos": "n.", "es": "noviembre"}, {"en": "ago", "pos": "adv.", "es": "hace (tiempo)"}, {"en": "month", "pos": "n.", "es": "mes"}, {"en": "yesterday", "pos": "adv., n.", "es": "ayer"}, {"en": "tomorrow", "pos": "adv., n.", "es": "mañana (día siguiente)"}, {"en": "midnight", "pos": "n.", "es": "medianoche"}, {"en": "hour", "pos": "n.", "es": "hora"}, {"en": "today", "pos": "adv., n.", "es": "hoy"}, {"en": "last (final)", "pos": "det.", "es": "último/a, pasado/a"}, {"en": "time", "pos": "n.", "es": "tiempo, hora, vez"}, {"en": "week", "pos": "n.", "es": "semana"}, {"en": "evening", "pos": "n.", "es": "tarde-noche (18h a 21h)"}, {"en": "June", "pos": "n.", "es": "junio"}, {"en": "March", "pos": "n.", "es": "marzo"}, {"en": "future", "pos": "n.", "es": "futuro"}, {"en": "August", "pos": "n.", "es": "agosto"}, {"en": "early", "pos": "adj., adv.", "es": "temprano"}, {"en": "Monday", "pos": "n.", "es": "lunes"}, {"en": "Wednesday", "pos": "n.", "es": "miércoles"}, {"en": "date", "pos": "n.", "es": "fecha, cita"}, {"en": "minute", "pos": "n.", "es": "minuto"}, {"en": "routine", "pos": "n.", "es": "rutina"}, {"en": "beginning", "pos": "n.", "es": "principio, comienzo"}], "context": [{"sentence": "My contract starts on ______ 1st.", "translation": "Mi contrato empieza el lunes día 1.", "answer": "Monday"}, {"sentence": "What ______ does your shift finish today?", "translation": "¿A qué hora termina tu turno hoy?", "answer": "time"}, {"sentence": "We have a team meeting every ______ afternoon.", "translation": "Tenemos una reunión de equipo cada miércoles por la tarde.", "answer": "Wednesday"}, {"sentence": "Please arrive ten minutes ______ on your first day.", "translation": "Por favor, llega diez minutos temprano en tu primer día.", "answer": "early"}, {"sentence": "See you ______ at eight o'clock!", "translation": "¡Nos vemos mañana a las ocho en punto!", "answer": "tomorrow"}], "pronunciation": [{"word": "Wednesday", "ipa": "/ˈwenzdeɪ/", "tip": "wénz-dei (la primera 'd' y la 'e' son mudas)"}, {"word": "Tuesday / Thursday", "ipa": "/ˈtjuːzdeɪ/ /ˈθɜːzdeɪ/", "tip": "tiúz-dei (martes) vs zérz-dei (jueves)"}, {"word": "February", "ipa": "/ˈfebruəri/", "tip": "féb-ru-a-ri"}, {"word": "hour", "ipa": "/ˈaʊə/", "tip": "áu-er (la 'h' es muda; suena igual que 'our')"}]}, {"id": 10, "title": "10. Números y Medidas", "words": [{"en": "three", "pos": "number", "es": "tres"}, {"en": "seven", "pos": "number", "es": "siete"}, {"en": "mile", "pos": "n.", "es": "milla"}, {"en": "once", "pos": "adv.", "es": "una vez"}, {"en": "ten", "pos": "number", "es": "diez"}, {"en": "fifth", "pos": "number", "es": "quinto/a"}, {"en": "much", "pos": "det./pron., adv.", "es": "mucho"}, {"en": "eighty", "pos": "number", "es": "ochenta"}, {"en": "metre", "pos": "n.", "es": "metro"}, {"en": "quarter", "pos": "n.", "es": "cuarto (1/4, 15 min)"}, {"en": "thirty", "pos": "number", "es": "treinta"}, {"en": "sixteen", "pos": "number", "es": "dieciséis"}, {"en": "eleven", "pos": "number", "es": "once"}, {"en": "two", "pos": "number", "es": "dos"}, {"en": "few", "pos": "det./adj., pron.", "es": "pocos/as"}, {"en": "first", "pos": "det./number, adv.", "es": "primer/o/a / primero"}, {"en": "part", "pos": "n.", "es": "parte"}, {"en": "ninety", "pos": "number", "es": "noventa"}, {"en": "forty", "pos": "number", "es": "cuarenta"}, {"en": "most", "pos": "det./pron., adv.", "es": "la mayoría, el/la más"}, {"en": "fourth", "pos": "number", "es": "cuarto/a"}, {"en": "seventeen", "pos": "number", "es": "diecisiete"}, {"en": "kilometre", "pos": "n.", "es": "kilómetro"}, {"en": "twenty", "pos": "number", "es": "veinte"}, {"en": "six", "pos": "number", "es": "seis"}, {"en": "four", "pos": "number", "es": "cuatro"}, {"en": "thousand", "pos": "number", "es": "mil"}, {"en": "million", "pos": "number", "es": "millón"}, {"en": "five", "pos": "number", "es": "cinco"}, {"en": "fifty", "pos": "number", "es": "cincuenta"}, {"en": "more", "pos": "det./pron., adv.", "es": "más"}, {"en": "nine", "pos": "number", "es": "nueve"}, {"en": "half", "pos": "n., det./pron.", "es": "mitad, medio/a"}, {"en": "many", "pos": "det./pron.", "es": "muchos/as"}, {"en": "twice", "pos": "adv.", "es": "dos veces"}, {"en": "eighteen", "pos": "number", "es": "dieciocho"}, {"en": "number", "pos": "n.", "es": "número"}, {"en": "sixty", "pos": "number", "es": "sesenta"}, {"en": "one", "pos": "number/det., pron.", "es": "uno/a"}, {"en": "third", "pos": "number", "es": "tercero/a"}, {"en": "twelve", "pos": "number", "es": "doce"}, {"en": "pair", "pos": "n.", "es": "par, pareja"}, {"en": "nineteen", "pos": "number", "es": "diecinueve"}, {"en": "hundred", "pos": "number", "es": "cien"}, {"en": "fifteen", "pos": "number", "es": "quince"}, {"en": "fourteen", "pos": "number", "es": "catorce"}, {"en": "piece", "pos": "n.", "es": "trozo, pieza"}, {"en": "eight", "pos": "number", "es": "ocho"}, {"en": "second (next after the first)", "pos": "det./ number", "es": "segundo/a (orden)"}, {"en": "lot", "pos": "pron., det., adv.", "es": "mucho, montón (a lot of)"}, {"en": "thirteen", "pos": "number", "es": "trece"}, {"en": "seventy", "pos": "number", "es": "setenta"}], "context": [{"sentence": "There are ______ people in my new work team.", "translation": "Hay doce personas en mi nuevo equipo de trabajo.", "answer": "twelve"}, {"sentence": "The train station is only one ______ from my house.", "translation": "La estación de tren está a solo un kilómetro de mi casa.", "answer": "kilometre"}, {"sentence": "Give me ______ an hour to finish this report.", "translation": "Dame media hora para terminar este informe.", "answer": "half"}, {"sentence": "This is my ______ week working abroad.", "translation": "Esta es mi primera semana trabajando en el extranjero.", "answer": "first"}, {"sentence": "I have ______ questions about the schedule.", "translation": "Tengo dos preguntas sobre el horario.", "answer": "two"}], "pronunciation": [{"word": "eight / eighteen", "ipa": "/eɪt/ /ˌeɪˈtiːn/", "tip": "éit / ei-tíin (la 'gh' es muda)"}, {"word": "half", "ipa": "/hɑːf/", "tip": "jáf (la 'l' es muda)"}, {"word": "thousand", "ipa": "/ˈθaʊznd/", "tip": "záu-zand (empieza con 'z' española)"}, {"word": "quarter", "ipa": "/ˈkwɔːtə/", "tip": "kuór-ter"}]}, {"id": 11, "title": "11. Naturaleza, Animales y Clima", "words": [{"en": "rain", "pos": "n., v.", "es": "lluvia / llover"}, {"en": "pig", "pos": "n.", "es": "cerdo"}, {"en": "elephant", "pos": "n.", "es": "elefante"}, {"en": "river", "pos": "n.", "es": "río"}, {"en": "fire", "pos": "n.", "es": "fuego, incendio"}, {"en": "plant", "pos": "n.", "es": "planta"}, {"en": "warm", "pos": "adj.", "es": "cálido/a, templado/a"}, {"en": "grow", "pos": "v.", "es": "crecer, cultivar"}, {"en": "weather", "pos": "n.", "es": "tiempo atmosférico, clima"}, {"en": "star", "pos": "n.", "es": "estrella"}, {"en": "lion", "pos": "n.", "es": "león"}, {"en": "space", "pos": "n.", "es": "espacio"}, {"en": "mouse", "pos": "n.", "es": "ratón"}, {"en": "flower", "pos": "n.", "es": "flor"}, {"en": "cat", "pos": "n.", "es": "gato"}, {"en": "sheep", "pos": "n.", "es": "oveja"}, {"en": "animal", "pos": "n.", "es": "animal"}, {"en": "farm", "pos": "n.", "es": "granja"}, {"en": "ice", "pos": "n.", "es": "hielo"}, {"en": "world", "pos": "n.", "es": "mundo"}, {"en": "hot", "pos": "adj.", "es": "caliente, caluroso/a"}, {"en": "sun", "pos": "n.", "es": "sol"}, {"en": "air", "pos": "n.", "es": "aire"}, {"en": "sea", "pos": "n.", "es": "mar"}, {"en": "snow", "pos": "n., v.", "es": "nieve / nevar"}, {"en": "land", "pos": "n.", "es": "tierra, terreno"}, {"en": "snake", "pos": "n.", "es": "serpiente"}, {"en": "dog", "pos": "n.", "es": "perro"}, {"en": "cold", "pos": "adj., n.", "es": "frío/a / resfriado"}, {"en": "beach", "pos": "n.", "es": "playa"}, {"en": "natural", "pos": "adj.", "es": "natural"}, {"en": "island", "pos": "n.", "es": "isla"}, {"en": "tree", "pos": "n.", "es": "árbol"}, {"en": "horse", "pos": "n.", "es": "caballo"}, {"en": "cow", "pos": "n.", "es": "vaca"}, {"en": "bird", "pos": "n.", "es": "pájaro, ave"}, {"en": "mountain", "pos": "n.", "es": "montaña"}], "context": [{"sentence": "The ______ in the Netherlands changes very quickly.", "translation": "El clima/tiempo en los Países Bajos cambia muy rápido.", "answer": "weather"}, {"sentence": "Take a jacket because it is ______ and windy outside.", "translation": "Coge una chaqueta porque hace frío y viento fuera.", "answer": "cold"}, {"sentence": "Look at the dark clouds; it is going to ______ soon.", "translation": "Mira las nubes oscuras; va a llover pronto.", "answer": "rain"}, {"sentence": "In spring, there is a beautiful yellow ______ in the garden.", "translation": "En primavera hay una hermosa flor amarilla en el jardín.", "answer": "flower"}, {"sentence": "The wind from the ______ is strong in winter.", "translation": "El viento del mar es fuerte en invierno.", "answer": "sea"}], "pronunciation": [{"word": "weather", "ipa": "/ˈweðə/", "tip": "wé-der (la 'a' es muda)"}, {"word": "mountain", "ipa": "/ˈmaʊntən/", "tip": "máun-tin"}, {"word": "island", "ipa": "/ˈaɪlənd/", "tip": "ái-land (la 's' es totalmente muda)"}, {"word": "air", "ipa": "/eə/", "tip": "ér (suena como una 'e' abierta seguida de una 'r' suave)"}]}, {"id": 12, "title": "12. Cuerpo Humano y Salud", "words": [{"en": "arm", "pos": "n.", "es": "brazo"}, {"en": "hair", "pos": "n.", "es": "pelo, cabello"}, {"en": "ear", "pos": "n.", "es": "oreja, oído"}, {"en": "tooth", "pos": "n.", "es": "diente, muela"}, {"en": "health", "pos": "n.", "es": "salud"}, {"en": "tired", "pos": "adj.", "es": "cansado/a"}, {"en": "die", "pos": "v.", "es": "morir"}, {"en": "hand", "pos": "n.", "es": "mano"}, {"en": "wake", "pos": "v.", "es": "despertar, despertarse"}, {"en": "back", "pos": "n., adv.", "es": "espalda / atrás, de vuelta"}, {"en": "head", "pos": "n.", "es": "cabeza"}, {"en": "nose", "pos": "n.", "es": "nariz"}, {"en": "eye", "pos": "n.", "es": "ojo"}, {"en": "sleep", "pos": "v.", "es": "dormir"}, {"en": "face", "pos": "n.", "es": "cara, rostro"}, {"en": "body", "pos": "n.", "es": "cuerpo"}, {"en": "leg", "pos": "n.", "es": "pierna"}, {"en": "healthy", "pos": "adj.", "es": "sano/a, saludable"}, {"en": "sick", "pos": "adj.", "es": "enfermo/a"}, {"en": "exercise", "pos": "n., v.", "es": "ejercicio / hacer ejercicio"}, {"en": "foot", "pos": "n.", "es": "pie"}, {"en": "hungry", "pos": "adj.", "es": "hambriento/a, con hambre"}, {"en": "thirsty", "pos": "adj.", "es": "sediento/a, con sed"}, {"en": "mouth", "pos": "n.", "es": "boca"}], "context": [{"sentence": "Raise your ______ if you have a question for the manager.", "translation": "Levanta la mano si tienes una pregunta para el encargado.", "answer": "hand"}, {"sentence": "I feel very ______ after my first day of work.", "translation": "Me siento muy cansado después de mi primer día de trabajo.", "answer": "tired"}, {"sentence": "If you are ______, tell your manager immediately.", "translation": "Si estás enfermo, díselo a tu encargado inmediatamente.", "answer": "sick"}, {"sentence": "Drink water when you are ______.", "translation": "Bebe agua cuando tengas sed.", "answer": "thirsty"}, {"sentence": "Good ______ is more important than money.", "translation": "La buena salud es más importante que el dinero.", "answer": "health"}], "pronunciation": [{"word": "head / health", "ipa": "/hed/ /helθ/", "tip": "jed / jelz (en ambas la 'a' es muda)"}, {"word": "tooth", "ipa": "/tuːθ/", "tip": "túz (la 'oo' suena 'u' larga y termina en 'z')"}, {"word": "tired", "ipa": "/ˈtaɪəd/", "tip": "tái-erd"}, {"word": "eye", "ipa": "/aɪ/", "tip": "ái (suena igual que el pronombre 'I')"}]}, {"id": 13, "title": "13. Ocio, Arte, Deporte y Tecnología", "words": [{"en": "song", "pos": "n.", "es": "canción"}, {"en": "internet", "pos": "n.", "es": "internet"}, {"en": "magazine", "pos": "n.", "es": "revista"}, {"en": "movie", "pos": "n.", "es": "película"}, {"en": "ball", "pos": "n.", "es": "pelota, balón"}, {"en": "television", "pos": "n.", "es": "televisión, televisor"}, {"en": "guitar", "pos": "n.", "es": "guitarra"}, {"en": "photograph", "pos": "n.", "es": "fotografía"}, {"en": "pool", "pos": "n.", "es": "piscina"}, {"en": "dance", "pos": "n., v.", "es": "bailar / baile"}, {"en": "programme", "pos": "n.", "es": "programa"}, {"en": "painting", "pos": "n.", "es": "cuadro, pintura"}, {"en": "game", "pos": "n.", "es": "juego, partido"}, {"en": "gym", "pos": "n.", "es": "gimnasio"}, {"en": "telephone", "pos": "n., v.", "es": "teléfono / telefonear"}, {"en": "newspaper", "pos": "n.", "es": "periódico"}, {"en": "computer", "pos": "n.", "es": "ordenador, computadora"}, {"en": "art", "pos": "n.", "es": "arte"}, {"en": "hobby", "pos": "n.", "es": "afición, pasatiempo"}, {"en": "event", "pos": "n.", "es": "evento, acontecimiento"}, {"en": "sport", "pos": "n.", "es": "deporte"}, {"en": "camera", "pos": "n.", "es": "cámara"}, {"en": "dancing", "pos": "n.", "es": "baile, danza"}, {"en": "band", "pos": "n.", "es": "banda (de música)"}, {"en": "party", "pos": "n.", "es": "fiesta, partido (político)"}, {"en": "picture", "pos": "n.", "es": "imagen, foto, cuadro"}, {"en": "photo", "pos": "n.", "es": "foto"}, {"en": "website", "pos": "n.", "es": "sitio web, página web"}, {"en": "swim", "pos": "v.", "es": "nadar"}, {"en": "player", "pos": "n.", "es": "jugador/a"}, {"en": "draw", "pos": "v.", "es": "dibujar"}, {"en": "festival", "pos": "n.", "es": "festival, fiesta"}, {"en": "paint", "pos": "v., n.", "es": "pintar / pintura"}, {"en": "win", "pos": "v.", "es": "ganar"}, {"en": "TV", "pos": "n.", "es": "televisión, tele"}, {"en": "concert", "pos": "n.", "es": "concierto"}, {"en": "swimming", "pos": "n.", "es": "natación"}, {"en": "news", "pos": "n.", "es": "noticias"}, {"en": "tennis", "pos": "n.", "es": "tenis"}, {"en": "DVD", "pos": "n.", "es": "DVD"}, {"en": "blog", "pos": "n.", "es": "blog"}, {"en": "match (contest/correspond)", "pos": "n., v.", "es": "partido / combinar, coincidir"}, {"en": "video", "pos": "n.", "es": "vídeo"}, {"en": "action", "pos": "n.", "es": "acción"}, {"en": "phone", "pos": "n., v.", "es": "teléfono / llamar por teléfono"}, {"en": "football", "pos": "n.", "es": "fútbol"}, {"en": "culture", "pos": "n.", "es": "cultura"}, {"en": "sing", "pos": "v.", "es": "cantar"}, {"en": "email", "pos": "n., v.", "es": "correo electrónico / enviar email"}, {"en": "piano", "pos": "n.", "es": "piano"}, {"en": "play", "pos": "v., n.", "es": "jugar, tocar (instrumento) / obra teatral"}, {"en": "activity", "pos": "n.", "es": "actividad"}, {"en": "CD", "pos": "n.", "es": "CD, disco compacto"}, {"en": "online", "pos": "adj., adv.", "es": "en línea, por internet"}, {"en": "radio", "pos": "n.", "es": "radio"}, {"en": "music", "pos": "n.", "es": "música"}, {"en": "film", "pos": "n.", "es": "película"}], "context": [{"sentence": "Send me an ______ with the details of the job.", "translation": "Envíame un correo electrónico con los detalles del trabajo.", "answer": "email"}, {"sentence": "Check the company ______ for more information.", "translation": "Consulta la página web de la empresa para más información.", "answer": "website"}, {"sentence": "I watch ______ in English to improve my listening.", "translation": "Veo la televisión en inglés para mejorar mi comprensión auditiva.", "answer": "television", "altAnswers": ["TV"]}, {"sentence": "Do you ______ football or tennis at the weekend?", "translation": "¿Juegas al fútbol o al tenis el fin de semana?", "answer": "play"}, {"sentence": "Call my mobile ______ if you get lost.", "translation": "Llama a mi teléfono móvil si te pierdes.", "answer": "phone", "altAnswers": ["telephone"]}], "pronunciation": [{"word": "guitar", "ipa": "/ɡɪˈtɑː/", "tip": "gui-tár (la 'u' hace que la 'g' suene suave y acento al final)"}, {"word": "movie", "ipa": "/ˈmuːvi/", "tip": "mú-vi"}, {"word": "magazine", "ipa": "/ˌmæɡəˈziːn/", "tip": "ma-ga-zíin (acento en la última sílaba)"}, {"word": "email", "ipa": "/ˈiːmeɪl/", "tip": "í-meil"}]}, {"id": 14, "title": "14. Verbos de Acción y Movimiento", "words": [{"en": "sit", "pos": "v.", "es": "sentarse"}, {"en": "cut", "pos": "v.", "es": "cortar"}, {"en": "change", "pos": "v., n.", "es": "cambiar / cambio"}, {"en": "carry", "pos": "v.", "es": "llevar, cargar"}, {"en": "move", "pos": "v.", "es": "mover, moverse, mudarse"}, {"en": "share", "pos": "v.", "es": "compartir"}, {"en": "stop", "pos": "v., n.", "es": "parar, detener / parada"}, {"en": "turn", "pos": "v., n.", "es": "girar, dar la vuelta / turno"}, {"en": "miss", "pos": "v.", "es": "echar de menos, perder (un bus)"}, {"en": "find", "pos": "v.", "es": "encontrar"}, {"en": "open", "pos": "adj., v.", "es": "abierto/a / abrir"}, {"en": "join", "pos": "v.", "es": "unirse a"}, {"en": "take", "pos": "v.", "es": "tomar, llevar, coger"}, {"en": "wash", "pos": "v.", "es": "lavar, lavarse"}, {"en": "finish", "pos": "v.", "es": "terminar, acabar"}, {"en": "add", "pos": "v.", "es": "añadir, sumar"}, {"en": "stand", "pos": "v.", "es": "estar de pie, levantarse"}, {"en": "put", "pos": "v.", "es": "poner, colocar"}, {"en": "climb", "pos": "v.", "es": "escalar, subir, trepar"}, {"en": "fall", "pos": "v.", "es": "caer"}, {"en": "include", "pos": "v.", "es": "incluir"}, {"en": "build", "pos": "v.", "es": "construir"}, {"en": "start", "pos": "v.", "es": "empezar, iniciar"}, {"en": "send", "pos": "v.", "es": "enviar, mandar"}, {"en": "check", "pos": "v.", "es": "comprobar, revisar"}, {"en": "happen", "pos": "v.", "es": "pasar, ocurrir, suceder"}, {"en": "lose", "pos": "v.", "es": "perder"}, {"en": "create", "pos": "v.", "es": "crear"}, {"en": "show", "pos": "v., n.", "es": "mostrar, enseñar / espectáculo"}, {"en": "use", "pos": "v.", "es": "usar, utilizar"}, {"en": "wait", "pos": "v.", "es": "esperar (aguardar)"}, {"en": "run", "pos": "v.", "es": "correr"}, {"en": "walk", "pos": "v., n.", "es": "caminar, andar / paseo"}, {"en": "complete", "pos": "adj., v.", "es": "completo/a / completar"}, {"en": "keep", "pos": "v.", "es": "guardar, mantener, seguir"}, {"en": "prepare", "pos": "v.", "es": "preparar"}, {"en": "fill", "pos": "v.", "es": "llenar, rellenar"}, {"en": "close", "pos": "v.", "es": "cerrar"}, {"en": "leave", "pos": "v.", "es": "irse, salir, dejar"}, {"en": "improve", "pos": "v.", "es": "mejorar"}, {"en": "help", "pos": "v., n.", "es": "ayuda / ayudar"}, {"en": "follow", "pos": "v.", "es": "seguir"}, {"en": "bring", "pos": "v.", "es": "traer"}, {"en": "go", "pos": "v.", "es": "ir"}, {"en": "break", "pos": "v., n.", "es": "romper / descanso, pausa"}, {"en": "begin", "pos": "v.", "es": "empezar, comenzar"}, {"en": "give", "pos": "v.", "es": "dar"}, {"en": "try", "pos": "v.", "es": "intentar, probar"}, {"en": "come", "pos": "v.", "es": "venir"}, {"en": "lie", "pos": "v.", "es": "tumbarse, acostarse, yacer"}], "context": [{"sentence": "Please ______ your bottle with fresh water before work.", "translation": "Por favor, llena tu botella con agua fresca antes del trabajo.", "answer": "fill"}, {"sentence": "______ the door when you leave the office.", "translation": "Cierra la puerta cuando salgas de la oficina.", "answer": "close"}, {"sentence": "Can you ______ me carry these heavy boxes?", "translation": "¿Puedes ayudarme a llevar estas cajas pesadas?", "answer": "help"}, {"sentence": "We ______ work at eight thirty every morning.", "translation": "Empezamos a trabajar a las ocho y media cada mañana.", "answer": "start"}, {"sentence": "______ here for a moment, please.", "translation": "Espera aquí un momento, por favor.", "answer": "wait"}], "pronunciation": [{"word": "walk / talk", "ipa": "/wɔːk/ /tɔːk/", "tip": "wók / tók (la 'l' es muda en ambas)"}, {"word": "climb", "ipa": "/klaɪm/", "tip": "kláim (la 'b' final es muda)"}, {"word": "build", "ipa": "/bɪld/", "tip": "bíld (la 'u' es muda)"}, {"word": "move", "ipa": "/muːv/", "tip": "múv (la 'o' suena 'u' larga)"}]}, {"id": 15, "title": "15. Verbos de Comunicación y Pensamiento", "words": [{"en": "look", "pos": "v.", "es": "mirar, parecer"}, {"en": "remember", "pos": "v.", "es": "recordar"}, {"en": "idea", "pos": "n.", "es": "idea"}, {"en": "mean", "pos": "v.", "es": "significar, querer decir"}, {"en": "reason", "pos": "n.", "es": "razón, motivo"}, {"en": "forget", "pos": "v.", "es": "olvidar"}, {"en": "message", "pos": "n.", "es": "mensaje"}, {"en": "call", "pos": "v., n.", "es": "llamar / llamada"}, {"en": "introduce", "pos": "v.", "es": "presentar (a alguien)"}, {"en": "agree", "pos": "v.", "es": "estar de acuerdo"}, {"en": "say", "pos": "v.", "es": "decir"}, {"en": "know", "pos": "v.", "es": "saber, conocer"}, {"en": "advice", "pos": "n.", "es": "consejo"}, {"en": "choose", "pos": "v.", "es": "elegir, escoger"}, {"en": "thank", "pos": "v.", "es": "agradecer"}, {"en": "listen", "pos": "v.", "es": "escuchar"}, {"en": "watch", "pos": "v., n.", "es": "mirar, ver (TV) / reloj de pulsera"}, {"en": "understand", "pos": "v.", "es": "entender, comprender"}, {"en": "compare", "pos": "v.", "es": "comparar"}, {"en": "believe", "pos": "v.", "es": "creer"}, {"en": "answer", "pos": "n., v.", "es": "respuesta / responder"}, {"en": "guess", "pos": "v., n.", "es": "adivinar, suponer"}, {"en": "ask", "pos": "v.", "es": "preguntar, pedir"}, {"en": "see", "pos": "v.", "es": "ver"}, {"en": "tell", "pos": "v.", "es": "decir, contar (a alguien)"}, {"en": "decide", "pos": "v.", "es": "decidir"}, {"en": "opinion", "pos": "n.", "es": "opinión"}, {"en": "hear", "pos": "v.", "es": "oír"}, {"en": "question", "pos": "n.", "es": "pregunta"}, {"en": "repeat", "pos": "v.", "es": "repetir"}, {"en": "think", "pos": "v.", "es": "pensar, creer"}, {"en": "describe", "pos": "v.", "es": "describir"}, {"en": "imagine", "pos": "v.", "es": "imaginar"}, {"en": "sound", "pos": "n., v.", "es": "sonido / sonar, parecer"}, {"en": "speak", "pos": "v.", "es": "hablar"}, {"en": "meet", "pos": "v.", "es": "conocer (por 1ª vez), quedar, reunirse"}, {"en": "talk", "pos": "v.", "es": "hablar, charlar"}, {"en": "conversation", "pos": "n.", "es": "conversación"}, {"en": "explain", "pos": "v.", "es": "explicar"}, {"en": "discuss", "pos": "v.", "es": "debatir, comentar, hablar de"}], "context": [{"sentence": "Sorry, I don't ______. Can you speak slowly, please?", "translation": "¿Perdona, no entiendo. Puedes hablar despacio, por favor?", "answer": "understand"}, {"sentence": "______ to your supervisor carefully.", "translation": "Escucha a tu supervisor con atención.", "answer": "listen"}, {"sentence": "Can I ______ you a quick question?", "translation": "¿Puedo hacerte una pregunta rápida?", "answer": "ask"}, {"sentence": "Please ______ your name and address clearly.", "translation": "Por favor, di tu nombre y dirección con claridad.", "answer": "say"}, {"sentence": "I ______ that learning English is the key to success.", "translation": "Creo que aprender inglés es la clave del éxito.", "answer": "think"}], "pronunciation": [{"word": "know", "ipa": "/nəʊ/", "tip": "nóu (la 'k' inicial es muda; suena igual que 'no')"}, {"word": "listen", "ipa": "/ˈlɪsn/", "tip": "lí-sen (la 't' es muda)"}, {"word": "say / says", "ipa": "/seɪ/ /sez/", "tip": "séi (infinitivo) / sez (3ª persona: 'he says')"}, {"word": "question", "ipa": "/ˈkwestʃən/", "tip": "kués-chon"}]}, {"id": 16, "title": "16. Verbos Auxiliares, Modales y Esenciales", "words": [{"en": "let", "pos": "v.", "es": "dejar, permitir"}, {"en": "would", "pos": "modal v.", "es": "auxiliar condicional (-ría)"}, {"en": "could", "pos": "modal v.", "es": "podía, podría (pasado/cortesía de can)"}, {"en": "cannot", "pos": "modal v.", "es": "no poder"}, {"en": "will", "pos": "modal v.", "es": "auxiliar de futuro (haré, iré...)"}, {"en": "want", "pos": "v.", "es": "querer, desear"}, {"en": "can", "pos": "modal v.", "es": "poder, saber hacer"}, {"en": "get", "pos": "v.", "es": "conseguir, obtener, llegar"}, {"en": "be", "pos": "v., auxiliary v.", "es": "ser, estar"}, {"en": "need", "pos": "v.", "es": "necesitar"}, {"en": "should", "pos": "modal v.", "es": "debería (consejo)"}, {"en": "have to", "pos": "modal v.", "es": "tener que"}, {"en": "do", "pos": "v., auxiliary v.", "es": "hacer"}, {"en": "make", "pos": "v.", "es": "hacer, fabricar"}, {"en": "become", "pos": "v.", "es": "llegar a ser, convertirse en"}, {"en": "must", "pos": "modal v.", "es": "deber (obligación)"}, {"en": "have", "pos": "v.", "es": "tener, haber"}], "context": [{"sentence": "You ______ bring your ID card on your first day.", "translation": "Debes traer tu documento de identidad en tu primer día.", "answer": "must"}, {"sentence": "______ you speak English or Dutch?", "translation": "¿Sabes/puedes hablar inglés u holandés?", "answer": "can"}, {"sentence": "I ______ to find a room before October.", "translation": "Necesito encontrar una habitación antes de octubre.", "answer": "need"}, {"sentence": "We ______ work together on this project.", "translation": "Trabajaremos juntos en este proyecto.", "answer": "will"}, {"sentence": "You ______ wear comfortable shoes at the warehouse.", "translation": "Deberías llevar zapatos cómodos en el almacén.", "answer": "should"}], "pronunciation": [{"word": "would / could / should", "ipa": "/wʊd/ /kʊd/ /ʃʊd/", "tip": "wúd / kúd / shúd (la 'l' es muda en los tres)"}, {"word": "must", "ipa": "/mʌst/", "tip": "mást (la 'u' suena 'a' corta)"}, {"word": "have to", "ipa": "/ˈhæf tə/", "tip": "jáf-tu (en habla rápida la 'v' suena como 'f')"}]}, {"id": 17, "title": "17. Adjetivos Descriptivos y de Cualidad", "words": [{"en": "modern", "pos": "adj.", "es": "moderno/a"}, {"en": "difficult", "pos": "adj.", "es": "difícil"}, {"en": "useful", "pos": "adj.", "es": "útil"}, {"en": "new", "pos": "adj.", "es": "nuevo/a"}, {"en": "little", "pos": "adj., det./pron.", "es": "pequeño/a, poco"}, {"en": "style", "pos": "n.", "es": "estilo"}, {"en": "final", "pos": "adj.", "es": "final, último/a"}, {"en": "short", "pos": "adj.", "es": "corto/a, bajo/a"}, {"en": "similar", "pos": "adj.", "es": "similar, parecido/a"}, {"en": "old", "pos": "adj.", "es": "viejo/a, antiguo/a"}, {"en": "black", "pos": "adj., n.", "es": "negro/a"}, {"en": "fat", "pos": "adj.", "es": "gordo/a"}, {"en": "pink", "pos": "adj., n.", "es": "rosa"}, {"en": "large", "pos": "adj.", "es": "grande"}, {"en": "clean", "pos": "adj., v.", "es": "limpio/a / limpiar"}, {"en": "red", "pos": "adj., n.", "es": "rojo/a"}, {"en": "dirty", "pos": "adj.", "es": "sucio/a"}, {"en": "small", "pos": "adj.", "es": "pequeño/a"}, {"en": "pretty", "pos": "adj., adv.", "es": "bonito/a / bastante"}, {"en": "colour", "pos": "n.", "es": "color"}, {"en": "quiet", "pos": "adj.", "es": "tranquilo/a, callado/a"}, {"en": "long", "pos": "adj., adv.", "es": "largo/a / mucho tiempo"}, {"en": "perfect", "pos": "adj.", "es": "perfecto/a"}, {"en": "true", "pos": "adj.", "es": "verdadero/a, cierto/a"}, {"en": "possible", "pos": "adj.", "es": "posible"}, {"en": "hard", "pos": "adj., adv.", "es": "duro/a, difícil / intensamente"}, {"en": "false", "pos": "adj.", "es": "falso/a"}, {"en": "correct", "pos": "adj., v.", "es": "correcto/a / corregir"}, {"en": "cool", "pos": "adj.", "es": "fresco/a, genial"}, {"en": "full", "pos": "adj.", "es": "lleno/a"}, {"en": "strong", "pos": "adj.", "es": "fuerte"}, {"en": "same", "pos": "adj., pron., adv.", "es": "mismo/a"}, {"en": "slow", "pos": "adj.", "es": "lento/a"}, {"en": "green", "pos": "adj., n.", "es": "verde"}, {"en": "easy", "pos": "adj.", "es": "fácil"}, {"en": "quick", "pos": "adj.", "es": "rápido/a"}, {"en": "best", "pos": "adj.", "es": "el/la mejor"}, {"en": "yellow", "pos": "adj., n.", "es": "amarillo/a"}, {"en": "personal", "pos": "adj.", "es": "personal"}, {"en": "popular", "pos": "adj.", "es": "popular"}, {"en": "blonde", "pos": "adj.", "es": "rubio/a"}, {"en": "special", "pos": "adj.", "es": "especial"}, {"en": "high", "pos": "adj.", "es": "alto/a"}, {"en": "fast", "pos": "adj., adv.", "es": "rápido/a / rápidamente"}, {"en": "good", "pos": "adj.", "es": "bueno/a"}, {"en": "grey", "pos": "adj., n.", "es": "gris"}, {"en": "big", "pos": "adj.", "es": "grande"}, {"en": "blue", "pos": "adj., n.", "es": "azul"}, {"en": "important", "pos": "adj.", "es": "importante"}, {"en": "free", "pos": "adj.", "es": "libre, gratis"}, {"en": "purple", "pos": "adj., n.", "es": "morado/a, púrpura"}, {"en": "brown", "pos": "adj., n.", "es": "marrón, café"}, {"en": "wrong", "pos": "adj.", "es": "equivocado/a, incorrecto/a"}, {"en": "white", "pos": "adj., n.", "es": "blanco/a"}, {"en": "common", "pos": "adj.", "es": "común"}, {"en": "beautiful", "pos": "adj.", "es": "hermoso/a, bonito/a"}, {"en": "extra", "pos": "adj.", "es": "extra, adicional"}, {"en": "main", "pos": "adj.", "es": "principal"}, {"en": "dark", "pos": "adj.", "es": "oscuro/a"}, {"en": "tall", "pos": "adj.", "es": "alto/a (estatura)"}, {"en": "real", "pos": "adj.", "es": "real, verdadero/a"}, {"en": "young", "pos": "adj.", "es": "joven"}, {"en": "bad", "pos": "adj.", "es": "malo/a"}, {"en": "different", "pos": "adj.", "es": "diferente, distinto/a"}, {"en": "better", "pos": "adj.", "es": "mejor"}, {"en": "dangerous", "pos": "adj.", "es": "peligroso/a"}, {"en": "famous", "pos": "adj.", "es": "famoso/a"}], "context": [{"sentence": "English is very ______ when you live in Holland.", "translation": "El inglés es muy útil cuando vives en Holanda.", "answer": "useful"}, {"sentence": "Keep your work area ______ and organized.", "translation": "Mantén tu zona de trabajo limpia y organizada.", "answer": "clean"}, {"sentence": "Our new office in Amsterdam is very ______ and bright.", "translation": "Nuestra nueva oficina en Ámsterdam es muy moderna y luminosa.", "answer": "modern"}, {"sentence": "The instructions are simple and ______ to follow.", "translation": "Las instrucciones son sencillas y fáciles de seguir.", "answer": "easy"}, {"sentence": "Be careful! That machine is ______.", "translation": "Ten cuidado! Esa máquina es peligrosa.", "answer": "dangerous"}], "pronunciation": [{"word": "beautiful", "ipa": "/ˈbjuːtɪfl/", "tip": "biú-ti-fol"}, {"word": "dangerous", "ipa": "/ˈdeɪndʒərəs/", "tip": "déin-ye-rus"}, {"word": "different", "ipa": "/ˈdɪfrənt/", "tip": "díf-rent (2 sílabas al hablar rápido)"}, {"word": "quiet / quite", "ipa": "/ˈkwaɪət/ /kwaɪt/", "tip": "kuái-et (tranquilo) vs kuáit (bastante)"}]}, {"id": 18, "title": "18. Adjetivos de Emoción, Estado y Opinión", "words": [{"en": "ready", "pos": "adj.", "es": "listo/a, preparado/a"}, {"en": "funny", "pos": "adj.", "es": "gracioso/a, divertido/a"}, {"en": "positive", "pos": "adj.", "es": "positivo/a"}, {"en": "bored", "pos": "adj.", "es": "aburrido/a (sentirse)"}, {"en": "excited", "pos": "adj.", "es": "emocionado/a, ilusionado/a"}, {"en": "enjoy", "pos": "v.", "es": "disfrutar"}, {"en": "great", "pos": "adj.", "es": "genial, estupendo/a, gran"}, {"en": "friendly", "pos": "adj.", "es": "amable, simpático/a"}, {"en": "negative", "pos": "adj.", "es": "negativo/a"}, {"en": "like (find sb/sth pleasant)", "pos": "v.", "es": "gustar"}, {"en": "love", "pos": "n., v.", "es": "amor / amar, encantar"}, {"en": "amazing", "pos": "adj.", "es": "asombroso/a, increíble"}, {"en": "wonderful", "pos": "adj.", "es": "maravilloso/a"}, {"en": "interesting", "pos": "adj.", "es": "interesante"}, {"en": "terrible", "pos": "adj.", "es": "terrible"}, {"en": "happy", "pos": "adj.", "es": "feliz, contento/a"}, {"en": "relax", "pos": "v.", "es": "relajarse"}, {"en": "sad", "pos": "adj.", "es": "triste"}, {"en": "busy", "pos": "adj.", "es": "ocupado/a"}, {"en": "fantastic", "pos": "adj.", "es": "fantástico/a"}, {"en": "fine", "pos": "adj.", "es": "bien, bueno/a"}, {"en": "feeling", "pos": "n.", "es": "sentimiento, sensación"}, {"en": "feel", "pos": "v.", "es": "sentir, sentirse"}, {"en": "dear", "pos": "adj.", "es": "querido/a, estimado/a"}, {"en": "fun", "pos": "n.", "es": "diversión"}, {"en": "nice", "pos": "adj.", "es": "agradable, simpático/a, bonito/a"}, {"en": "angry", "pos": "adj.", "es": "enfadado/a, enojado/a"}, {"en": "sure", "pos": "adj.", "es": "seguro/a"}, {"en": "hate", "pos": "v.", "es": "odiar"}, {"en": "interested", "pos": "adj.", "es": "interesado/a"}, {"en": "prefer", "pos": "v.", "es": "preferir"}, {"en": "boring", "pos": "adj.", "es": "aburrido/a (que aburre)"}, {"en": "laugh", "pos": "v., n.", "es": "reír / risa"}, {"en": "exciting", "pos": "adj.", "es": "emocionante"}, {"en": "favourite", "pos": "adj., n.", "es": "favorito/a"}, {"en": "afraid", "pos": "adj.", "es": "asustado/a, con miedo"}, {"en": "interest", "pos": "n., v.", "es": "interés / interesar"}, {"en": "hope", "pos": "v.", "es": "esperar (tener esperanza)"}], "context": [{"sentence": "I am very ______ about starting my new job!", "translation": "¡Estoy muy emocionado por empezar mi nuevo trabajo!", "answer": "excited"}, {"sentence": "Everyone at the office is very ______ and helpful.", "translation": "Todos en la oficina son muy amables y serviciales.", "answer": "friendly"}, {"sentence": "Are you ______ you have the right address?", "translation": "¿Estás seguro de que tienes la dirección correcta?", "answer": "sure"}, {"sentence": "We are ______ to welcome you to our team.", "translation": "Estamos felices de darte la bienvenida a nuestro equipo.", "answer": "happy"}, {"sentence": "I ______ working in an international environment.", "translation": "Disfruto trabajando en un entorno internacional.", "answer": "enjoy"}], "pronunciation": [{"word": "excited", "ipa": "/ɪkˈsaɪtɪd/", "tip": "ik-sái-tid (la 'c' tras 'x' suena como 's')"}, {"word": "favourite", "ipa": "/ˈfeɪvərɪt/", "tip": "féiv-rit"}, {"word": "laugh", "ipa": "/lɑːf/", "tip": "láf (la 'gh' suena como 'f')"}, {"word": "sure", "ipa": "/ʃʊə/", "tip": "shúr (empieza con sonido 'sh')"}]}, {"id": 19, "title": "19. Adverbios, Preposiciones y Conectores", "words": [{"en": "about", "pos": "prep., adv.", "es": "sobre, acerca de, aproximadamente"}, {"en": "so", "pos": "adv., conj.", "es": "así que, tan, entonces"}, {"en": "with", "pos": "prep.", "es": "con"}, {"en": "before", "pos": "prep.", "es": "antes de"}, {"en": "but", "pos": "conj.", "es": "pero"}, {"en": "under", "pos": "prep., adv.", "es": "debajo de"}, {"en": "sometimes", "pos": "adv.", "es": "a veces"}, {"en": "to", "pos": "prep., infinitive marker", "es": "a, hacia, para"}, {"en": "very", "pos": "adv.", "es": "muy"}, {"en": "maybe", "pos": "adv.", "es": "quizás, tal vez"}, {"en": "when", "pos": "adv., pron., conj.", "es": "cuándo, cuando"}, {"en": "then", "pos": "adv.", "es": "entonces, luego"}, {"en": "like (similar)", "pos": "prep.", "es": "como, parecido a"}, {"en": "never", "pos": "adv.", "es": "nunca"}, {"en": "because", "pos": "conj.", "es": "porque"}, {"en": "not", "pos": "adv.", "es": "no (negación verbal)"}, {"en": "too", "pos": "adv.", "es": "también, demasiado"}, {"en": "how", "pos": "adv.", "es": "cómo, cuánto"}, {"en": "around", "pos": "prep., adv.", "es": "alrededor de, por"}, {"en": "enough", "pos": "det., pron., adv.", "es": "suficiente, bastante"}, {"en": "after", "pos": "prep.", "es": "después de"}, {"en": "in", "pos": "prep., adv.", "es": "en, dentro de"}, {"en": "often", "pos": "adv.", "es": "a menudo, frecuentemente"}, {"en": "where", "pos": "adv., conj.", "es": "dónde, donde"}, {"en": "quickly", "pos": "adv.", "es": "rápidamente"}, {"en": "together", "pos": "adv.", "es": "juntos/as"}, {"en": "away", "pos": "adv.", "es": "lejos, fuera"}, {"en": "ever", "pos": "adv.", "es": "alguna vez"}, {"en": "outside", "pos": "adv.", "es": "afuera, exterior"}, {"en": "if", "pos": "conj.", "es": "si (condicional)"}, {"en": "between", "pos": "prep.", "es": "entre"}, {"en": "well", "pos": "adv., adj., exclam.", "es": "bien / bueno (muletilla)"}, {"en": "into", "pos": "prep.", "es": "dentro de, hacia adentro"}, {"en": "again", "pos": "adv.", "es": "otra vez, de nuevo"}, {"en": "up", "pos": "adv., prep.", "es": "arriba, hacia arriba"}, {"en": "only", "pos": "adj., adv.", "es": "solo, solamente, único/a"}, {"en": "behind", "pos": "prep., adv.", "es": "detrás de"}, {"en": "else", "pos": "adv.", "es": "más, otro (what else: qué más)"}, {"en": "down", "pos": "adv., prep.", "es": "abajo, hacia abajo"}, {"en": "on", "pos": "prep., adv.", "es": "en, sobre, encendido"}, {"en": "probably", "pos": "adv.", "es": "probablemente"}, {"en": "just", "pos": "adv.", "es": "solo, justo, acabar de"}, {"en": "there", "pos": "adv.", "es": "allí, ahí"}, {"en": "next to", "pos": "prep.", "es": "al lado de, junto a"}, {"en": "over", "pos": "prep., adv.", "es": "por encima de, terminado"}, {"en": "below", "pos": "adv., prep.", "es": "debajo de, abajo"}, {"en": "always", "pos": "adv.", "es": "siempre"}, {"en": "here", "pos": "adv.", "es": "aquí"}, {"en": "why", "pos": "adv.", "es": "por qué"}, {"en": "even", "pos": "adv.", "es": "incluso, aun"}, {"en": "or", "pos": "conj.", "es": "o"}, {"en": "however", "pos": "adv.", "es": "sin embargo"}, {"en": "of", "pos": "prep.", "es": "de"}, {"en": "until", "pos": "conj./prep.", "es": "hasta"}, {"en": "at", "pos": "prep.", "es": "en, a (lugar/hora)"}, {"en": "during", "pos": "prep.", "es": "durante"}, {"en": "above", "pos": "prep., adv.", "es": "encima de, arriba"}, {"en": "for", "pos": "prep.", "es": "para, por, durante"}, {"en": "and", "pos": "conj.", "es": "y"}, {"en": "by", "pos": "prep.", "es": "por, junto a, en (transporte)"}, {"en": "from", "pos": "prep.", "es": "de, desde"}, {"en": "usually", "pos": "adv.", "es": "normalmente, usualmente"}, {"en": "out", "pos": "adv./prep.", "es": "fuera"}, {"en": "really", "pos": "adv.", "es": "realmente, de verdad, muy"}, {"en": "still", "pos": "adv.", "es": "todavía, aún"}, {"en": "off", "pos": "adv., prep.", "es": "fuera, apagado"}, {"en": "without", "pos": "prep.", "es": "sin"}, {"en": "through", "pos": "prep., adv.", "es": "a través de"}, {"en": "across", "pos": "prep., adv.", "es": "a través de, al otro lado"}, {"en": "than", "pos": "conj.", "es": "que (comparativo)"}, {"en": "also", "pos": "adv.", "es": "también"}, {"en": "quite", "pos": "adv.", "es": "bastante"}, {"en": "as", "pos": "prep.", "es": "como, mientras"}], "context": [{"sentence": "I ______ arrive at work fifteen minutes early.", "translation": "Siempre llego al trabajo quince minutos temprano.", "answer": "always"}, {"sentence": "The bus stop is ______ the supermarket.", "translation": "La parada de autobús está al lado del supermercado.", "answer": "next to"}, {"sentence": "Please speak slowly ______ I am still learning English.", "translation": "Por favor habla despacio porque todavía estoy aprendiendo inglés.", "answer": "because"}, {"sentence": "We work from Monday ______ Friday.", "translation": "Trabajamos de lunes a viernes.", "answer": "until", "altAnswers": ["to"]}, {"sentence": "Is the station far ______ here?", "translation": "¿Está la estación lejos de aquí?", "answer": "from"}], "pronunciation": [{"word": "through", "ipa": "/θruː/", "tip": "zrú (la 'gh' es muda y 'ou' suena 'u')"}, {"word": "often", "ipa": "/ˈɒfn/", "tip": "ó-fen (la 't' suele ser muda)"}, {"word": "because", "ipa": "/bɪˈkɒz/", "tip": "bi-kóz"}, {"word": "together", "ipa": "/təˈɡeðə/", "tip": "tu-gué-der"}]}, {"id": 20, "title": "20. Pronombres, Determinantes, Artículos y Exclamaciones", "words": [{"en": "OK", "pos": "exclam., adj./adv.", "es": "vale, de acuerdo, bien"}, {"en": "nobody", "pos": "pron.", "es": "nadie"}, {"en": "someone", "pos": "pron.", "es": "alguien"}, {"en": "something", "pos": "pron.", "es": "algo"}, {"en": "that", "pos": "det., pron., conj.", "es": "ese/a/o, aquel/la, que"}, {"en": "what", "pos": "pron./det.", "es": "qué, cuál"}, {"en": "a, an", "pos": "indefinite article", "es": "un, una"}, {"en": "no", "pos": "exclam., det.", "es": "no, ningún"}, {"en": "hi", "pos": "exclam.", "es": "hola"}, {"en": "he", "pos": "pron.", "es": "él"}, {"en": "yourself", "pos": "pron.", "es": "tú mismo/a, te"}, {"en": "everything", "pos": "pron.", "es": "todo"}, {"en": "own", "pos": "adj./pron.", "es": "propio/a"}, {"en": "us", "pos": "pron.", "es": "nos, nosotros/as"}, {"en": "yes", "pos": "exclam.", "es": "sí"}, {"en": "nothing", "pos": "pron.", "es": "nada"}, {"en": "oh", "pos": "exclam.", "es": "oh"}, {"en": "this", "pos": "det./pron.", "es": "este, esta, esto"}, {"en": "his", "pos": "det.", "es": "su (de él)"}, {"en": "hey", "pos": "exclam.", "es": "eh, oye, hola"}, {"en": "her", "pos": "pron., det.", "es": "su (de ella), la, le"}, {"en": "any", "pos": "det., pron.", "es": "algún, ningún, cualquier"}, {"en": "you", "pos": "pron.", "es": "tú, usted, vosotros/as, ustedes"}, {"en": "another", "pos": "det./pron.", "es": "otro/a (adicional)"}, {"en": "welcome", "pos": "exclam., v., adj.", "es": "bienvenido/a / dar la bienvenida"}, {"en": "anyone", "pos": "pron.", "es": "alguien, nadie, cualquiera"}, {"en": "bye", "pos": "exclam.", "es": "adiós"}, {"en": "both", "pos": "det./pron.", "es": "ambos/as, los dos"}, {"en": "hello", "pos": "exclam./n.", "es": "hola"}, {"en": "which", "pos": "pron./det.", "es": "cuál, qué, el cual"}, {"en": "everybody", "pos": "pron.", "es": "todo el mundo, todos"}, {"en": "goodbye", "pos": "exclam./n.", "es": "adiós"}, {"en": "everyone", "pos": "pron.", "es": "todo el mundo, todos"}, {"en": "them", "pos": "pron.", "es": "los, las, les (a ellos/as)"}, {"en": "she", "pos": "pron.", "es": "ella"}, {"en": "all", "pos": "det., pron.", "es": "todo, todos/as"}, {"en": "its", "pos": "det.", "es": "su (de cosa/animal)"}, {"en": "other", "pos": "adj./pron.", "es": "otro/a"}, {"en": "no one", "pos": "pron.", "es": "nadie"}, {"en": "they", "pos": "pron.", "es": "ellos, ellas"}, {"en": "our", "pos": "det.", "es": "nuestro/a"}, {"en": "we", "pos": "pron.", "es": "nosotros, nosotras"}, {"en": "I", "pos": "pron.", "es": "yo"}, {"en": "who", "pos": "pron.", "es": "quién, quien"}, {"en": "me", "pos": "pron.", "es": "me, mí"}, {"en": "please", "pos": "exclam.", "es": "por favor"}, {"en": "yeah", "pos": "exclam.", "es": "sí (informal)"}, {"en": "anything", "pos": "pron.", "es": "algo, nada, cualquier cosa"}, {"en": "their", "pos": "det.", "es": "su, sus (de ellos/as)"}, {"en": "somebody", "pos": "pron.", "es": "alguien"}, {"en": "each", "pos": "det./pron./adv.", "es": "cada"}, {"en": "my", "pos": "det.", "es": "mi, mis"}, {"en": "your", "pos": "det.", "es": "tu, tus, su, sus"}, {"en": "the", "pos": "definite article", "es": "el, la, los, las"}, {"en": "sorry", "pos": "adj., exclam.", "es": "lo siento, disculpa"}, {"en": "him", "pos": "pron.", "es": "lo, le (a él)"}, {"en": "it", "pos": "pron.", "es": "ello, lo, la (cosa/animal)"}, {"en": "every", "pos": "det.", "es": "cada, todos/as"}, {"en": "thanks", "pos": "exclam., n.", "es": "gracias"}, {"en": "some", "pos": "det., pron.", "es": "algunos/as, algo de"}], "context": [{"sentence": "______ name is Carlos, and I am from Spain.", "translation": "Mi nombre es Carlos y soy de España.", "answer": "my"}, {"sentence": "______ you very much for your help!", "translation": "¡Muchas gracias por tu ayuda!", "answer": "thank"}, {"sentence": "______ is my colleague from Poland.", "translation": "Este es mi compañero de Polonia.", "answer": "this"}, {"sentence": "Does ______ know where the manager is?", "translation": "¿Alguien sabe dónde está el encargado?", "answer": "anyone"}, {"sentence": "______, I am late because of the train.", "translation": "Lo siento, llego tarde por culpa del tren.", "answer": "sorry"}], "pronunciation": [{"word": "who", "ipa": "/huː/", "tip": "jú (la 'w' es muda)"}, {"word": "their / there", "ipa": "/ðeə/", "tip": "dér (suenan exactamente igual)"}, {"word": "nothing", "ipa": "/ˈnʌθɪŋ/", "tip": "ná-zing (la 'o' suena 'a' corta)"}, {"word": "yourself", "ipa": "/jɔːˈself/", "tip": "ior-sélf (acento en la segunda sílaba)"}]}], "nl_survival": [{"group": "Situación A: Tu primer día en la empresa", "sentence": "Good ______! My name is Carlos. I am new in the team.", "translation": "¡Buenos días! Me llamo Carlos. Soy nuevo en el equipo.", "answer": "morning"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "Good morning! My name is Carlos. I am new in the ______.", "translation": "¡Buenos días! Me llamo Carlos. Soy nuevo en el equipo.", "answer": "team"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "I am looking for Mr. De Vries, the ______.", "translation": "Busco al Sr. De Vries, el encargado/gerente.", "answer": "manager"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "Sorry, can you repeat that slowly? I don't ______.", "translation": "Perdona, ¿puedes repetir eso despacio? No entiendo.", "answer": "understand"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "How do you ______ your street name?", "translation": "¿Cómo se deletrea el nombre de tu calle?", "answer": "spell"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "I always arrive fifteen minutes ______ because I take the train.", "translation": "Siempre llego quince minutos temprano porque cojo el tren.", "answer": "early"}, {"group": "Situación A: Tu primer día en la empresa", "sentence": "Thank you very much for your ______ today!", "translation": "¡Muchas gracias por tu ayuda hoy!", "answer": "help"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "I rent a small ______ near the central station.", "translation": "Alquilo un apartamento pequeño cerca de la estación central.", "answer": "apartment"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "I rent a small apartment near the central ______.", "translation": "Alquilo un apartamento pequeño cerca de la estación central.", "answer": "station"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "In Holland, almost everybody goes to work by ______.", "translation": "En Holanda, casi todo el mundo va al trabajo en bicicleta.", "answer": "bicycle"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "Don't forget your coat; it is going to ______ this afternoon.", "translation": "No olvides tu abrigo; va a llover esta tarde.", "answer": "rain"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "Where can I buy a train ______ to Rotterdam?", "translation": "¿Dónde puedo comprar un billete de tren a Róterdam?", "answer": "ticket"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "Can I pay by ______ in this supermarket?", "translation": "¿Puedo pagar con tarjeta en este supermercado?", "answer": "card"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "Can I pay by card in this ______?", "translation": "¿Puedo pagar con tarjeta en este supermercado?", "answer": "supermarket"}, {"group": "Situación B: Vivienda, Transporte y Compras en Holanda", "sentence": "Please write your new ______ and phone number on this form.", "translation": "Por favor, escribe tu nueva dirección y número de teléfono en este formulario.", "answer": "address"}]};
+
+
+const EXTRA_ES_SYNONYMS = {
+
+  "parent": ["padre", "madre", "progenitor", "progenitora"],
+
+  "dad": ["padre", "papa"],
+
+  "mum": ["madre", "mama"],
+
+  "policeman": ["agente de policia", "agente"],
+
+  "pen": ["boli", "pluma"],
+
+  "computer": ["computador", "pc"],
+
+  "apartment": ["departamento"],
+
+  "flat": ["departamento"],
+
+  "wear": ["llevar", "usar", "vestir"],
+
+  "join": ["unirse", "juntarse", "incorporarse"],
+
+  "agree": ["acordar", "coincidir", "aceptar"],
+
+  "can": ["puedo", "puede", "saber"],
+
+  "cannot": ["no puedo", "no puede"],
+
+  "should": ["deberia", "deber"],
+
+  "must": ["deber", "tener que"],
+
+  "would": ["condicional"],
+
+  "will": ["futuro"],
+
+  "fun": ["divertido", "divertida", "entretenido", "entretenida"],
+
+  "enjoy": ["gustar", "divertirse"],
+
+  "watch": ["reloj"],
+
+  "see": ["mirar", "observar"],
+
+  "look": ["ver", "observar"],
+
+  "find": ["hallar"],
+
+  "remember": ["acordarse"],
+
+  "forget": ["olvidarse"],
+
+  "speak": ["conversar", "platicar"],
+
+  "talk": ["conversar", "platicar"],
+
+  "begin": ["iniciar"],
+
+  "start": ["comenzar"],
+
+  "finish": ["finalizar", "concluir"],
+
+  "end": ["acabar", "finalizar"],
+
+  "big": ["enorme", "amplio", "amplia"],
+
+  "large": ["amplio", "amplia"],
+
+  "small": ["chico", "chica", "diminuto", "diminuta"],
+
+  "little": ["chico", "chica"],
+
+  "lot": ["un monton", "a lot of"],
+
+  "car": ["carro", "automovil"],
+
+  "bus": ["camion", "colectivo", "guagua"],
+
+  "train": ["ferrocarril"],
+
+  "ticket": ["tique", "pasaje"],
+
+  "money": ["plata", "efectivo"],
+
+  "job": ["empleo", "puesto", "ocupacion"],
+
+  "work": ["empleo", "labor", "laborar"],
+
+  "worker": ["empleado", "empleada", "operario", "operaria"],
+
+  "customer": ["clienta", "comprador", "compradora"],
+
+  "pig": ["puerco", "chancho", "cochino"],
+
+  "pool": ["alberca", "pileta"],
+
+  "pink": ["rosado", "rosada"],
+
+  "purple": ["violeta", "lila"],
+
+  "grey": ["plomo"],
+
+  "brown": ["castano", "castana", "pardo", "parda"],
+
+  "hair": ["pelos"],
+
+  "potato": ["patatas", "papas"],
+
+  "juice": ["jugos", "zumos"],
+
+  "sandwich": ["emparedado", "torta"],
+
+  "cake": ["torta", "ponque", "bizcocho"],
+
+  "cookie": ["galleta"],
+
+  "phone": ["movil", "celular"],
+
+  "telephone": ["movil", "celular"],
+
+  "movie": ["filme", "cinta"],
+
+  "film": ["filme", "cinta"],
+
+  "photo": ["fotografia"],
+
+  "photograph": ["foto"],
+
+  "picture": ["dibujo", "ilustracion", "pintura"],
+
+  "exam": ["prueba", "evaluacion"],
+
+  "test": ["evaluacion"],
+
+  "mistake": ["fallo", "yerro"],
+
+  "class": ["leccion", "curso"],
+
+  "lesson": ["clase"],
+
+  "bathroom": ["bano", "aseo", "servicio", "sanitario"],
+
+  "toilet": ["retrete", "excusado", "servicio", "sanitario"],
+
+  "bedroom": ["cuarto", "recamara", "alcoba"],
+
+  "room": ["cuarto", "estancia", "pieza"],
+
+  "desk": ["mesa de trabajo"],
+
+  "clothes": ["vestimenta", "prendas", "atuendo"],
+
+  "trousers": ["pantalon"],
+
+  "jeans": ["pantalones vaqueros", "mezclilla"],
+
+  "sweater": ["pulover", "chompa", "saco", "buso"],
+
+  "jacket": ["cazadora", "chamarra", "campera"],
+
+  "shoe": ["calzado", "zapatos"],
+
+  "bag": ["maleta", "cartera", "saco"],
+
+  "fast": ["veloz", "velozmente"],
+
+  "quick": ["veloz"],
+
+  "quickly": ["velozmente", "deprisa"],
+
+  "sad": ["apenado", "apenada", "melancolico", "melancolica"],
+
+  "happy": ["alegre"],
+
+  "angry": ["molesto", "molesta", "furioso", "furiosa"],
+
+  "afraid": ["temeroso", "temerosa", "asustado", "asustada"],
+
+  "tired": ["agotado", "agotada", "fatigado", "fatigada"],
+
+  "sick": ["malo", "mala"],
+
+  "right": ["razon", "bien"],
+
+  "wrong": ["mal", "erroneo", "erronea", "falso", "falsa"],
+
+  "hard": ["complicado", "complicada", "fuerte"],
+
+  "difficult": ["complicado", "complicada"],
+
+  "easy": ["sencillo", "sencilla", "simple"],
+
+  "beautiful": ["guapo", "guapa", "lindo", "linda", "bello", "bella"],
+
+  "pretty": ["lindo", "linda", "guapo", "guapa"],
+
+  "nice": ["majo", "maja", "lindo", "linda", "amable"],
+
+  "good": ["bien"],
+
+  "bad": ["mal"],
+
+  "maybe": ["quiza", "a lo mejor", "posiblemente"],
+
+  "probably": ["seguramente"],
+
+  "usually": ["habitualmente", "por lo general", "generalmente"],
+
+  "often": ["seguido", "con frecuencia"],
+
+  "sometimes": ["algunas veces", "de vez en cuando"],
+
+  "never": ["jamas"],
+
+  "now": ["actualmente", "en este momento"],
+
+  "today": ["el dia de hoy"],
+
+  "soon": ["enseguida", "dentro de poco"],
+
+  "late": ["retrasado", "retrasada"],
+
+  "early": ["pronto", "con antelacion"],
+
+  "near": ["proximo", "proxima", "cerca"],
+
+  "far": ["lejano", "lejana"],
+
+  "outside": ["fuera", "en el exterior"],
+
+  "inside": ["dentro", "adentro"],
+
+  "downstairs": ["piso de abajo", "planta baja"],
+
+  "upstairs": ["piso de arriba", "planta alta"],
+
+  "goodbye": ["chao", "hasta luego"],
+
+  "bye": ["chao", "hasta luego"],
+
+  "hello": ["buenos dias", "buenas"],
+
+  "hi": ["buenas"],
+
+  "sorry": ["perdon", "perdona", "disculpe", "lo lamento"],
+
+  "thanks": ["muchas gracias"],
+
+  "thank": ["dar las gracias"],
+
+  "OK": ["ok", "esta bien", "listo", "perfecto"],
+
+  "yeah": ["si"]
+
+};
+
+
+// Comprehensive bidirectional British / American / close A1 equivalents for ES -> EN mode
+
+const EN_SYNONYMS = {
+
+  "colour": ["color"],
+
+  "centre": ["center"],
+
+  "metre": ["meter"],
+
+  "kilometre": ["kilometer"],
+
+  "favourite": ["favorite"],
+
+  "neighbour": ["neighbor"],
+
+  "practise": ["practice"],
+
+  "programme": ["program"],
+
+  "theatre": ["theater"],
+
+  "grey": ["gray"],
+
+  "flat": ["apartment"],
+
+  "apartment": ["flat"],
+
+  "toilet": ["bathroom", "restroom"],
+
+  "trousers": ["pants"],
+
+  "shop": ["store"],
+
+  "post": ["mail"],
+
+  "holiday": ["vacation"],
+
+  "vacation": ["holiday"],
+
+  "autumn": ["fall"],
+
+  "football": ["soccer"],
+
+  "film": ["movie"],
+
+  "movie": ["film"],
+
+  "mum": ["mom"],
+
+  "mobile": ["cell", "cellphone"],
+
+  "biscuit": ["cookie"],
+
+  "bicycle": ["bike"],
+
+  "bike": ["bicycle"],
+
+  "tv": ["television"],
+
+  "television": ["tv"],
+
+  "phone": ["telephone"],
+
+  "telephone": ["phone"],
+
+  "photo": ["photograph"],
+
+  "photograph": ["photo"],
+
+  "big": ["large"],
+
+  "large": ["big"],
+
+  "small": ["little"],
+
+  "little": ["small"],
+
+  "quick": ["fast"],
+
+  "fast": ["quick"],
+
+  "begin": ["start"],
+
+  "start": ["begin"],
+
+  "end": ["finish"],
+
+  "finish": ["end"],
+
+  "university": ["college"],
+
+  "college": ["university"],
+
+  "say": ["tell"],
+
+  "tell": ["say"],
+
+  "speak": ["talk"],
+
+  "talk": ["speak"],
+
+  "see": ["watch"],
+
+  "look": ["watch"],
+
+  "watch": ["see", "look"],
+
+  "difficult": ["hard"],
+
+  "hard": ["difficult"],
+
+  "beautiful": ["pretty", "nice"],
+
+  "pretty": ["beautiful", "nice"],
+
+  "nice": ["beautiful", "pretty"],
+
+  "true": ["real"],
+
+  "real": ["true"],
+
+  "too": ["also"],
+
+  "also": ["too"],
+
+  "each": ["every"],
+
+  "every": ["each"],
+
+  "other": ["another"],
+
+  "another": ["other"],
+
+  "nobody": ["no one"],
+
+  "no one": ["nobody"],
+
+  "somebody": ["someone"],
+
+  "someone": ["somebody"],
+
+  "everybody": ["everyone"],
+
+  "everyone": ["everybody"],
+
+  "hi": ["hello"],
+
+  "hello": ["hi"],
+
+  "bye": ["goodbye"],
+
+  "goodbye": ["bye"],
+
+  "kind": ["type"],
+
+  "type": ["kind"]
+
+};
+
+
+const STORAGE_KEY = "oxford_a1_workbook_progress_v1";
+
+let progress = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
+
+
+Object.keys(progress).forEach(k => {
+
+  if (progress[k] === true) progress[k] = "solved";
+
+});
+
+
+let currentCatId = 1;
+
+let currentMode = "en2es";
+
+let onlyPending = false;
+
+let searchQuery = "";
+
+
+const catSelect = document.getElementById("catSelect");
+
+const exerciseContainer = document.getElementById("exerciseContainer");
+
+const modeSummary = document.getElementById("modeSummary");
+
+const togglePendingBtn = document.getElementById("togglePendingBtn");
+
+const searchInput = document.getElementById("searchInput");
+
+const searchWrap = document.getElementById("searchWrap");
+
+const batchBanner = document.getElementById("batchBanner");
+
+const batchText = document.getElementById("batchText");
+
+const globalScore = document.getElementById("globalScore");
+
+const globalProgress = document.getElementById("globalProgress");
+
+const bottomBar = document.getElementById("bottomBar");
+
+const scoreModal = document.getElementById("scoreModal");
+
+const modalBody = document.getElementById("modalBody");
+
+
+function saveProgress() {
+
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+
+  updateGlobalHeader();
+
+}
+
+
+function computeA1Stats() {
+
+  let en2esSolved = 0, en2esRevealed = 0;
+
+  let es2enSolved = 0, es2enRevealed = 0;
+
+  let ctxSolved = 0, ctxRevealed = 0;
+
+  let nlSolved = 0, nlRevealed = 0;
+
+  const perCategory = [];
+
+
+  APP_DATA.categories.forEach(cat => {
+
+    let c1 = 0, c2 = 0, c3 = 0;
+
+    cat.words.forEach(w => {
+
+      const s1 = progress[`en2es:${cat.id}:${w.en}`];
+
+      if (s1 === "solved") { en2esSolved++; c1++; }
+
+      else if (s1 === "revealed") en2esRevealed++;
+
+
+      const s2 = progress[`es2en:${cat.id}:${w.en}`];
+
+      if (s2 === "solved") { es2enSolved++; c2++; }
+
+      else if (s2 === "revealed") es2enRevealed++;
+
+    });
+
+    cat.context.forEach((_, idx) => {
+
+      const s3 = progress[`ctx:${cat.id}:${idx}`];
+
+      if (s3 === "solved") { ctxSolved++; c3++; }
+
+      else if (s3 === "revealed") ctxRevealed++;
+
+    });
+
+    const cTot = cat.words.length * 2 + cat.context.length;
+
+    const cSol = c1 + c2 + c3;
+
+    perCategory.push({
+
+      id: cat.id,
+
+      title: cat.title,
+
+      solved: cSol,
+
+      total: cTot,
+
+      pct: Math.round((cSol / cTot) * 100)
+
+    });
+
+  });
+
+
+  APP_DATA.nl_survival.forEach((_, idx) => {
+
+    const s4 = progress[`nl:${idx}`];
+
+    if (s4 === "solved") nlSolved++;
+
+    else if (s4 === "revealed") nlRevealed++;
+
+  });
+
+  perCategory.push({
+
+    id: 21,
+
+    title: "21. Extra: Supervivencia en Holanda",
+
+    solved: nlSolved,
+
+    total: 15,
+
+    pct: Math.round((nlSolved / 15) * 100)
+
+  });
+
+
+  const totalExercises = 900 + 900 + 100 + 15; // 1915
+
+  const totalSolved = en2esSolved + es2enSolved + ctxSolved + nlSolved;
+
+  const totalRevealed = en2esRevealed + es2enRevealed + ctxRevealed + nlRevealed;
+
+  const pctExact = (totalSolved / totalExercises) * 100;
+
+  const pctRounded = Math.round(pctExact);
+
+
+  let rankLabel = "Nivel Inicial";
+
+  let rankDesc = "Estás empezando a construir tu vocabulario esencial A1.";
+
+  if (pctExact >= 90) {
+
+    rankLabel = "Nivel A1 Dominado";
+
+    rankDesc = "¡Enhorabuena! Dominas prácticamente todo el vocabulario oficial Oxford A1 y estás listo para pasar al A2.";
+
+  } else if (pctExact >= 75) {
+
+    rankLabel = "A1 Avanzado";
+
+    rankDesc = "Muy buen dominio del nivel A1. Ya puedes defenderte con soltura en situaciones cotidianas y laborales básicas.";
+
+  } else if (pctExact >= 50) {
+
+    rankLabel = "A1 Intermedio (Base Sólida)";
+
+    rankDesc = "Ya superas la mitad del nivel A1. Sigue afianzando la traducción inversa (ES → EN).";
+
+  } else if (pctExact >= 25) {
+
+    rankLabel = "A1 en Progreso";
+
+    rankDesc = "Buen avance inicial. Continúa practicando bloque a bloque.";
+
+  }
+
+
+  return {
+
+    totalExercises,
+
+    totalSolved,
+
+    totalRevealed,
+
+    pctExact,
+
+    pctRounded,
+
+    rankLabel,
+
+    rankDesc,
+
+    en2esSolved,
+
+    es2enSolved,
+
+    ctxSolved,
+
+    nlSolved,
+
+    perCategory
+
+  };
+
+}
+
+
+function updateGlobalHeader() {
+
+  const st = computeA1Stats();
+
+  globalScore.textContent = `Nota A1: ${st.pctRounded}%`;
+
+  globalProgress.style.width = Math.min(100, st.pctExact).toFixed(1) + "%";
+
+
+  document.getElementById("bannerPct").innerHTML =
+
+    `${st.pctExact.toFixed(1)}% <span style="font-size:0.92rem; font-weight:600; color:#93c5fd;">• ${st.rankLabel}</span>`;
+
+  const revNote = st.totalRevealed > 0 ? ` (${st.totalRevealed} vistas con solución)` : "";
+
+  document.getElementById("bannerSub").textContent =
+
+    `${st.totalSolved} de ${st.totalExercises} ejercicios acertados por ti${revNote}`;
+
+}
+
+
+function openScoreModal(customTitle = null) {
+
+  const st = computeA1Stats();
+
+  const titleEl = scoreModal.querySelector("h2");
+
+  titleEl.innerHTML = customTitle || "&#127942; Puntuación de Nivel A1 (0% – 100%)";
+
+
+  const pEn2Es = ((st.en2esSolved / 900) * 100).toFixed(1);
+
+  const pEs2En = ((st.es2enSolved / 900) * 100).toFixed(1);
+
+  const pCtx = ((st.ctxSolved / 100) * 100).toFixed(1);
+
+  const pNl = ((st.nlSolved / 15) * 100).toFixed(1);
+
+
+  const cid = Number(currentCatId);
+
+  const curCatStat = st.perCategory.find(c => c.id === cid);
+
+  const catBlockHtml = curCatStat ? `
+
+    <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:10px; padding:10px 12px; margin-bottom:12px; font-size:0.9rem;">
+
+      <strong>Nota en este tema (${curCatStat.title}):</strong><br/>
+
+      ${curCatStat.solved} / ${curCatStat.total} ejercicios acertados = <strong>${curCatStat.pct}%</strong>
+
+    </div>` : "";
+
+
+  const catListRows = st.perCategory.map(c => `
+
+    <div class="cat-mini-row" data-jump-cat="${c.id}">
+
+      <span style="font-weight:600; color:#1e293b;">${c.title}</span>
+
+      <span style="font-weight:700; color:${c.pct === 100 ? '#16a34a' : c.pct > 0 ? '#2563eb' : '#64748b'};">${c.pct}% (${c.solved}/${c.total})</span>
+
+    </div>
+
+  `).join("");
+
+
+  modalBody.innerHTML = `
+
+    <div class="big-gauge">
+
+      <div style="font-size:0.82rem; font-weight:700; color:#64748b; text-transform:uppercase;">Tu Puntuación Total en A1</div>
+
+      <div class="big-pct">${st.pctExact.toFixed(1)}%</div>
+
+      <div style="font-size:0.88rem; color:#475569; margin-top:4px;">${st.totalSolved} aciertos propios de ${st.totalExercises} ejercicios totales</div>
+
+      <div class="rank-pill">${st.rankLabel}</div>
+
+      <p style="font-size:0.88rem; color:#334155; margin:10px 0 0;">${st.rankDesc}</p>
+
+    </div>
+
+
+    ${catBlockHtml}
+
+
+    <div style="font-weight:700; font-size:0.9rem; margin-bottom:6px;">Desglose por tipo de prueba:</div>
+
+
+    <div class="stat-row">
+
+      <div style="flex:1;">
+
+        <div style="display:flex; justify-content:space-between;">
+
+          <span><strong>1. Comprensión (EN → ES)</strong></span>
+
+          <span>${st.en2esSolved} / 900 (${pEn2Es}%)</span>
+
+        </div>
+
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:${pEn2Es}%;"></div></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-row">
+
+      <div style="flex:1;">
+
+        <div style="display:flex; justify-content:space-between;">
+
+          <span><strong>2. Escritura Activa (ES → EN)</strong></span>
+
+          <span>${st.es2enSolved} / 900 (${pEs2En}%)</span>
+
+        </div>
+
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:${pEs2En}%;"></div></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-row">
+
+      <div style="flex:1;">
+
+        <div style="display:flex; justify-content:space-between;">
+
+          <span><strong>3. Frases en Contexto</strong></span>
+
+          <span>${st.ctxSolved} / 100 (${pCtx}%)</span>
+
+        </div>
+
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:${pCtx}%;"></div></div>
+
+      </div>
+
+    </div>
+
+
+    <div class="stat-row">
+
+      <div style="flex:1;">
+
+        <div style="display:flex; justify-content:space-between;">
+
+          <span><strong>4. Supervivencia en Holanda</strong></span>
+
+          <span>${st.nlSolved} / 15 (${pNl}%)</span>
+
+        </div>
+
+        <div class="mini-bar"><div class="mini-bar-fill" style="width:${pNl}%;"></div></div>
+
+      </div>
+
+    </div>
+
+
+    <div style="font-weight:700; font-size:0.9rem; margin-top:14px;">Progreso por categoría (toca una para ir):</div>
+
+    <div class="cat-breakdown-list">${catListRows}</div>
+
+
+    ${st.totalRevealed > 0 ? `<p style="font-size:0.82rem; color:#854d0e; background:#fefce8; padding:8px 10px; border-radius:8px; margin-top:10px;">Nota: Tienes <strong>${st.totalRevealed}</strong> ejercicios marcados con <em>Ver respuesta</em>. No suman al porcentaje hasta que pulses <em>Reintentar</em> y los escribas tú.</p>` : ""}
+
+
+    <button type="button" class="btn btn-danger" id="resetAllGlobalBtn">&#128465; Reiniciar TODO el progreso (volver a 0%)</button>
+
+  `;
+
+
+  modalBody.querySelectorAll("[data-jump-cat]").forEach(row => {
+
+    row.addEventListener("click", () => {
+
+      currentCatId = Number(row.getAttribute("data-jump-cat"));
+
+      catSelect.value = currentCatId;
+
+      searchQuery = "";
+
+      searchInput.value = "";
+
+      scoreModal.classList.remove("open");
+
+      render();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+
+    });
+
+  });
+
+
+  modalBody.querySelector("#resetAllGlobalBtn").addEventListener("click", () => {
+
+    if (!confirm("¿Seguro que quieres borrar TODAS tus respuestas de los 21 bloques y volver a 0%? Esta acción no se puede deshacer.")) return;
+
+    progress = {};
+
+    saveProgress();
+
+    scoreModal.classList.remove("open");
+
+    render();
+
+  });
+
+
+  scoreModal.classList.add("open");
+
+}
+
+
+document.getElementById("globalScore").addEventListener("click", () => openScoreModal());
+
+document.getElementById("openReportBtn").addEventListener("click", () => openScoreModal());
+
+document.getElementById("batchModalBtn").addEventListener("click", () => openScoreModal());
+
+document.getElementById("closeModalBtn").addEventListener("click", () => scoreModal.classList.remove("open"));
+
+scoreModal.addEventListener("click", (e) => {
+
+  if (e.target === scoreModal) scoreModal.classList.remove("open");
+
+});
+
+
+function refreshCurrentSummary() {
+
+  const isCap21 = Number(currentCatId) === 21;
+
+  if (isCap21) {
+
+    let solvedCount = 0;
+
+    APP_DATA.nl_survival.forEach((_, idx) => { if (progress[`nl:${idx}`] === "solved") solvedCount++; });
+
+    const pct = Math.round((solvedCount / APP_DATA.nl_survival.length) * 100);
+
+    modeSummary.textContent = `Supervivencia Holanda: ${solvedCount} / ${APP_DATA.nl_survival.length} (${pct}%)`;
+
+    return;
+
+  }
+
+  const cat = APP_DATA.categories.find(c => c.id === Number(currentCatId));
+
+  if (!cat) return;
+
+  if (currentMode === "en2es") {
+
+    let s = 0;
+
+    cat.words.forEach(w => { if (progress[`en2es:${cat.id}:${w.en}`] === "solved") s++; });
+
+    const pct = Math.round((s / cat.words.length) * 100);
+
+    modeSummary.textContent = `EN → ES: ${s} / ${cat.words.length} (${pct}%)`;
+
+  } else if (currentMode === "es2en") {
+
+    let s = 0;
+
+    cat.words.forEach(w => { if (progress[`es2en:${cat.id}:${w.en}`] === "solved") s++; });
+
+    const pct = Math.round((s / cat.words.length) * 100);
+
+    modeSummary.textContent = `ES → EN: ${s} / ${cat.words.length} (${pct}%)`;
+
+  } else if (currentMode === "context") {
+
+    let s = 0;
+
+    cat.context.forEach((_, idx) => { if (progress[`ctx:${cat.id}:${idx}`] === "solved") s++; });
+
+    const pct = Math.round((s / cat.context.length) * 100);
+
+    modeSummary.textContent = `Contexto: ${s} / ${cat.context.length} (${pct}%)`;
+
+  }
+
+}
+
+
+function checkIfAllDoneAndCelebrate() {
+
+  const st = computeA1Stats();
+
+  if (st.totalSolved === st.totalExercises) {
+
+    openScoreModal("&#127881; ¡100% Completado! Tu Nota Final en A1");
+
+  }
+
+}
+
+
+function normalize(str) {
+
+  return (str || "")
+
+    .toLowerCase()
+
+    .normalize("NFD")
+
+    .replace(/[\u0300-\u036f]/g, "")
+
+    .replace(/\(.*?\)/g, " ")
+
+    .replace(/[¡!¿?.,;:"'’]/g, " ")
+
+    .replace(/\s+/g, " ")
+
+    .trim();
+
+}
+
+
+function expandGenderTokens(phrase) {
+
+  const words = phrase.split(/\s+/).filter(Boolean);
+
+  let results = [""];
+
+
+  words.forEach(token => {
+
+    let variants = [token];
+
+    if (token.includes("/")) {
+
+      const parts = token.split("/");
+
+      const base = parts[0];
+
+      variants = [base];
+
+      for (let i = 1; i < parts.length; i++) {
+
+        const suf = parts[i];
+
+        if (!suf) continue;
+
+        if (base.toLowerCase() === "el" && suf.toLowerCase() === "la") {
+
+          variants.push("la");
+
+        } else if (base.endsWith("o") && (suf === "a" || suf === "as")) {
+
+          variants.push(base.slice(0, -1) + suf);
+
+        } else if (base.endsWith("os") && suf === "as") {
+
+          variants.push(base.slice(0, -2) + "as");
+
+        } else if (base.endsWith("e") && (suf === "a" || suf === "o")) {
+
+          variants.push(base.slice(0, -1) + suf);
+
+        } else if (suf.length <= 2) {
+
+          variants.push(base + suf);
+
+        } else {
+
+          variants.push(suf);
+
+        }
+
+      }
+
+    }
+
+    const nextResults = [];
+
+    results.forEach(prefix => {
+
+      variants.forEach(v => {
+
+        nextResults.push(prefix ? `${prefix} ${v}` : v);
+
+      });
+
+    });
+
+    results = nextResults;
+
+  });
+
+
+  return results;
+
+}
+
+
+function checkSpanishAnswer(userRaw, expectedRaw, englishHeadword = "") {
+
+  const u = normalize(userRaw);
+
+  if (!u) return false;
+
+
+  const withoutParens = expectedRaw.replace(/\(.*?\)/g, " ").trim();
+
+  const rawMeanings = withoutParens
+
+    .split(/[,;]|\s+\/\s+|\s+o\s+/)
+
+    .map(s => s.trim())
+
+    .filter(Boolean);
+
+
+  let validOptions = new Set();
+
+  validOptions.add(normalize(withoutParens));
+
+
+  rawMeanings.forEach(meaning => {
+
+    const expandedList = expandGenderTokens(meaning);
+
+    expandedList.forEach(variant => {
+
+      const norm = normalize(variant);
+
+      if (!norm) return;
+
+      validOptions.add(norm);
+
+
+      const noArt = norm.replace(/^(el|la|los|las|un|una)\s+/, "");
+
+      if (noArt) validOptions.add(noArt);
+
+
+      if (norm.endsWith("se") && norm.length > 4) {
+
+        validOptions.add(norm.slice(0, -2));
+
+      }
+
+    });
+
+  });
+
+
+  const baseEn = englishHeadword.replace(/\(.*?\)/g, "").trim();
+
+  if (EXTRA_ES_SYNONYMS[baseEn]) {
+
+    EXTRA_ES_SYNONYMS[baseEn].forEach(syn => validOptions.add(normalize(syn)));
+
+  }
+
+
+  if (validOptions.has("uno")) validOptions.add("un");
+
+  if (validOptions.has(u)) return true;
+
+
+  const userParts = userRaw.split(/[,;/]/).map(s => normalize(s)).filter(Boolean);
+
+  if (userParts.length > 1 && userParts.every(p => validOptions.has(p))) {
+
+    return true;
+
+  }
+
+
+  return false;
+
+}
+
+
+function checkEnglishAnswer(userRaw, expectedRaw, altList = []) {
+
+  const u = normalize(userRaw);
+
+  if (!u) return false;
+
+  const cleanExp = normalize(expectedRaw);
+
+  if (u === cleanExp) return true;
+
+
+  if (expectedRaw.includes(",")) {
+
+    const parts = expectedRaw.split(",").map(s => normalize(s)).filter(Boolean);
+
+    if (parts.includes(u)) return true;
+
+    if (parts.join(" ") === u || parts.join(" o ") === u) return true;
+
+  }
+
+
+  const baseWord = normalize(expectedRaw.replace(/\(.*?\)/g, ""));
+
+  if (u === baseWord) return true;
+
+
+  if (EN_SYNONYMS[baseWord]) {
+
+    if (EN_SYNONYMS[baseWord].map(v => normalize(v)).includes(u)) return true;
+
+  }
+
+
+  if (Array.isArray(altList) && altList.length > 0) {
+
+    if (altList.map(v => normalize(v)).includes(u)) return true;
+
+  }
+
+
+  return false;
+
+}
+
+
+function makeHint(word) {
+
+  const clean = word.replace(/\(.*?\)/g, "").trim();
+
+  const parts = clean.split(/\s+/);
+
+  return parts.map(p => {
+
+    if (p.length <= 2) return p[0] + "_".repeat(p.length - 1);
+
+    return p[0] + " " + Array(p.length - 2).fill("_").join(" ") + " " + p[p.length - 1];
+
+  }).join("   ") + ` (${clean.length} letras)`;
+
+}
+
+
+function speakEnglish(text) {
+
+  if (!("speechSynthesis" in window)) {
+
+    alert("Tu navegador no soporta lectura en voz alta.");
+
+    return;
+
+  }
+
+  window.speechSynthesis.cancel();
+
+  const cleanText = text.replace(/\(.*?\)/g, "").replace(/______/g, "blank").trim();
+
+  const utter = new SpeechSynthesisUtterance(cleanText);
+
+  utter.lang = "en-GB";
+
+  utter.rate = 0.9;
+
+  window.speechSynthesis.speak(utter);
+
+}
+
+
+exerciseContainer.addEventListener("click", (e) => {
+
+  const audioBtn = e.target.closest("[data-speak]");
+
+  if (audioBtn) {
+
+    speakEnglish(audioBtn.getAttribute("data-speak"));
+
+  }
+
+});
+
+
+function populateCategorySelect() {
+
+  catSelect.innerHTML = "";
+
+  APP_DATA.categories.forEach(cat => {
+
+    const opt = document.createElement("option");
+
+    opt.value = cat.id;
+
+    opt.textContent = `${cat.title} (${cat.words.length} palabras)`;
+
+    catSelect.appendChild(opt);
+
+  });
+
+  const opt21 = document.createElement("option");
+
+  opt21.value = 21;
+
+  opt21.textContent = "21. Extra: Supervivencia Laboral en Holanda (15 frases)";
+
+  catSelect.appendChild(opt21);
+
+}
+
+
+function renderEmptyState() {
+
+  const st = computeA1Stats();
+
+  const div = document.createElement("div");
+
+  div.className = "empty-state";
+
+  if (searchQuery.trim()) {
+
+    div.style.background = "#f8fafc";
+
+    div.style.borderColor = "#cbd5e1";
+
+    div.style.color = "#334155";
+
+    div.innerHTML = `<p style="margin:0;">No hay ejercicios que coincidan con <strong>"${escapeAttr(searchQuery)}"</strong> en esta vista.</p>`;
+
+  } else {
+
+    div.innerHTML = `
+
+      <h3>&#127881; ¡Has completado todos los ejercicios de este bloque!</h3>
+
+      <p style="margin:0 0 12px; font-size:0.94rem;">Tu puntuación global en el nivel A1 es ahora del <strong>${st.pctExact.toFixed(1)}%</strong> (${st.rankLabel}).</p>
+
+      <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap;">
+
+        <button type="button" class="btn btn-check" id="modalFromEmptyBtn">&#127942; Ver mi Nota A1 (0–100%)</button>
+
+        <button type="button" class="btn btn-reset" id="showAllAgainBtn">Mostrar todas las tarjetas</button>
+
+      </div>
+
+    `;
+
+    div.querySelector("#modalFromEmptyBtn").addEventListener("click", () => openScoreModal());
+
+    div.querySelector("#showAllAgainBtn").addEventListener("click", () => {
+
+      onlyPending = false;
+
+      togglePendingBtn.classList.remove("active");
+
+      render();
+
+    });
+
+  }
+
+  exerciseContainer.appendChild(div);
+
+}
+
+
+function render() {
+
+  batchBanner.classList.remove("show");
+
+  document.querySelectorAll(".tab-btn").forEach(btn => {
+
+    btn.classList.toggle("active", btn.dataset.mode === currentMode);
+
+  });
+
+
+  const isCap21 = Number(currentCatId) === 21;
+
+  document.getElementById("modeTabs").style.display = isCap21 ? "none" : "grid";
+
+
+  exerciseContainer.innerHTML = "";
+
+
+  if (isCap21) {
+
+    bottomBar.style.display = "flex";
+
+    togglePendingBtn.style.display = "inline-block";
+
+    searchWrap.style.display = "block";
+
+    renderCap21();
+
+    return;
+
+  }
+
+
+  const cat = APP_DATA.categories.find(c => c.id === Number(currentCatId));
+
+  if (!cat) return;
+
+
+  if (currentMode === "pron") {
+
+    bottomBar.style.display = "none";
+
+    togglePendingBtn.style.display = "none";
+
+    searchWrap.style.display = "none";
+
+    renderPronunciation(cat);
+
+    return;
+
+  }
+
+
+  bottomBar.style.display = "flex";
+
+  togglePendingBtn.style.display = "inline-block";
+
+  searchWrap.style.display = "block";
+
+
+  if (currentMode === "en2es") {
+
+    renderEn2Es(cat);
+
+  } else if (currentMode === "es2en") {
+
+    renderEs2En(cat);
+
+  } else if (currentMode === "context") {
+
+    renderContext(cat);
+
+  }
+
+}
+
+
+function escapeAttr(str) {
+
+  return String(str)
+
+    .replace(/&/g, "&amp;")
+
+    .replace(/"/g, "&quot;")
+
+    .replace(/</g, "&lt;")
+
+    .replace(/>/g, "&gt;");
+
+}
+
+
+function matchesSearch(textA, textB = "") {
+
+  const q = normalize(searchQuery);
+
+  if (!q) return true;
+
+  return normalize(textA).includes(q) || normalize(textB).includes(q);
+
+}
+
+
+function renderEn2Es(cat) {
+
+  refreshCurrentSummary();
+
+  let renderedCount = 0;
+
+
+  cat.words.forEach((w, idx) => {
+
+    const key = `en2es:${cat.id}:${w.en}`;
+
+    const state = progress[key];
+
+    const isDone = !!state;
+
+    if (onlyPending && isDone) return;
+
+    if (!matchesSearch(w.en, w.es)) return;
+
+    renderedCount++;
+
+
+    const card = document.createElement("div");
+
+    card.className = "ex-card" + (state === "solved" ? " is-correct" : state === "revealed" ? " is-revealed" : "");
+
+    card.dataset.key = key;
+
+
+    const fbClass = state === "solved" ? "ok" : state === "revealed" ? "rev" : "";
+
+    const fbHtml = state === "solved"
+
+      ? `&#10003; ¡Correcto! Significados en A1: <strong>${w.es}</strong>`
+
+      : state === "revealed"
+
+        ? `&#128161; Solución vista: <strong>${w.es}</strong> (pulsa <em>Reintentar</em> para sumarla a tu nota)`
+
+        : "";
+
+
+    card.innerHTML = `
+
+      <div class="ex-header">
+
+        <div>
+
+          <span class="ex-num">#${idx + 1}</span>
+
+          <span class="ex-pos">${w.pos}</span>
+
+        </div>
+
+        <div class="card-actions">
+
+          <button type="button" class="btn btn-audio" data-speak="${escapeAttr(w.en)}">&#128266; Escuchar</button>
+
+          <button type="button" class="btn btn-hint" data-action="reveal">Ver respuesta</button>
+
+          <button type="button" class="btn btn-hint" data-action="clear" style="${isDone ? "" : "display:none;"}">Reintentar</button>
+
+        </div>
+
+      </div>
+
+      <div class="ex-prompt">${w.en}</div>
+
+      <div class="input-row">
+
+        <input type="text" class="ans-input" placeholder="Escribe un significado en español..." value="${isDone ? escapeAttr(w.es) : ""}" autocomplete="off" enterkeyhint="done" />
+
+        <button type="button" class="btn btn-check">Comprobar</button>
+
+      </div>
+
+      <div class="feedback ${fbClass}">${fbHtml}</div>
+
+    `;
+
+
+    attachCardHandlers(card, (val) => checkSpanishAnswer(val, w.es, w.en), w.es, key);
+
+    exerciseContainer.appendChild(card);
+
+  });
+
+
+  if (renderedCount === 0) renderEmptyState();
+
+}
+
+
+function renderEs2En(cat) {
+
+  refreshCurrentSummary();
+
+  let renderedCount = 0;
+
+
+  cat.words.forEach((w, idx) => {
+
+    const key = `es2en:${cat.id}:${w.en}`;
+
+    const state = progress[key];
+
+    const isDone = !!state;
+
+    if (onlyPending && isDone) return;
+
+    if (!matchesSearch(w.es, w.en)) return;
+
+    renderedCount++;
+
+
+    const card = document.createElement("div");
+
+    card.className = "ex-card" + (state === "solved" ? " is-correct" : state === "revealed" ? " is-revealed" : "");
+
+    card.dataset.key = key;
+
+
+    const fbClass = state === "solved" ? "ok" : state === "revealed" ? "rev" : "";
+
+    const fbHtml = state === "solved"
+
+      ? `&#10003; ¡Correcto! <strong>${w.en}</strong>`
+
+      : state === "revealed"
+
+        ? `&#128161; Solución vista: <strong>${w.en}</strong> (pulsa <em>Reintentar</em> para sumarla a tu nota)`
+
+        : "";
+
+
+    card.innerHTML = `
+
+      <div class="ex-header">
+
+        <div>
+
+          <span class="ex-num">#${idx + 1}</span>
+
+          <span class="ex-pos">${w.pos}</span>
+
+        </div>
+
+        <div class="card-actions">
+
+          <button type="button" class="btn btn-audio" data-speak="${escapeAttr(w.en)}" style="${isDone ? "" : "display:none;"}">&#128266; Escuchar</button>
+
+          <button type="button" class="btn btn-hint" data-action="hint">Pista letras</button>
+
+          <button type="button" class="btn btn-hint" data-action="reveal">Ver respuesta</button>
+
+          <button type="button" class="btn btn-hint" data-action="clear" style="${isDone ? "" : "display:none;"}">Reintentar</button>
+
+        </div>
+
+      </div>
+
+      <div class="ex-prompt">${w.es}</div>
+
+      <div class="hint-box" style="display:none;">${makeHint(w.en)}</div>
+
+      <div class="input-row">
+
+        <input type="text" class="ans-input" placeholder="Escribe la palabra en inglés..." value="${isDone ? escapeAttr(w.en) : ""}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" />
+
+        <button type="button" class="btn btn-check">Comprobar</button>
+
+      </div>
+
+      <div class="feedback ${fbClass}">${fbHtml}</div>
+
+    `;
+
+
+    const hintBtn = card.querySelector('[data-action="hint"]');
+
+    const hintBox = card.querySelector('.hint-box');
+
+    hintBtn.addEventListener("click", () => {
+
+      hintBox.style.display = hintBox.style.display === "none" ? "inline-block" : "none";
+
+    });
+
+
+    attachCardHandlers(card, (val) => checkEnglishAnswer(val, w.en), w.en, key, true);
+
+    exerciseContainer.appendChild(card);
+
+  });
+
+
+  if (renderedCount === 0) renderEmptyState();
+
+}
+
+
+function renderContext(cat) {
+
+  refreshCurrentSummary();
+
+  let renderedCount = 0;
+
+
+  cat.context.forEach((item, idx) => {
+
+    const key = `ctx:${cat.id}:${idx}`;
+
+    const state = progress[key];
+
+    const isDone = !!state;
+
+    if (onlyPending && isDone) return;
+
+    if (!matchesSearch(item.sentence, item.translation)) return;
+
+    renderedCount++;
+
+
+    const fullSentence = item.sentence.replace("______", item.answer);
+
+    const card = document.createElement("div");
+
+    card.className = "ex-card" + (state === "solved" ? " is-correct" : state === "revealed" ? " is-revealed" : "");
+
+    card.dataset.key = key;
+
+
+    const fbClass = state === "solved" ? "ok" : state === "revealed" ? "rev" : "";
+
+    const fbHtml = state === "solved"
+
+      ? `&#10003; ¡Exacto! ${fullSentence}`
+
+      : state === "revealed"
+
+        ? `&#128161; Solución vista: <strong>${item.answer}</strong>`
+
+        : "";
+
+
+    card.innerHTML = `
+
+      <div class="ex-header">
+
+        <span class="ex-num">Frase #${idx + 1}</span>
+
+        <div class="card-actions">
+
+          <button type="button" class="btn btn-audio" data-speak="${escapeAttr(fullSentence)}">&#128266; Frase</button>
+
+          <button type="button" class="btn btn-hint" data-action="hint">Pista</button>
+
+          <button type="button" class="btn btn-hint" data-action="reveal">Solución</button>
+
+          <button type="button" class="btn btn-hint" data-action="clear" style="${isDone ? "" : "display:none;"}">Reintentar</button>
+
+        </div>
+
+      </div>
+
+      <div class="ex-prompt">${item.sentence}</div>
+
+      <div class="ex-sub">${item.translation}</div>
+
+      <div class="hint-box" style="display:none;">${makeHint(item.answer)}</div>
+
+      <div class="input-row">
+
+        <input type="text" class="ans-input" placeholder="Palabra que falta..." value="${isDone ? escapeAttr(item.answer) : ""}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" />
+
+        <button type="button" class="btn btn-check">Comprobar</button>
+
+      </div>
+
+      <div class="feedback ${fbClass}">${fbHtml}</div>
+
+    `;
+
+
+    const hintBtn = card.querySelector('[data-action="hint"]');
+
+    const hintBox = card.querySelector('.hint-box');
+
+    hintBtn.addEventListener("click", () => {
+
+      hintBox.style.display = hintBox.style.display === "none" ? "inline-block" : "none";
+
+    });
+
+
+    attachCardHandlers(card, (val) => checkEnglishAnswer(val, item.answer, item.altAnswers || []), item.answer, key, true);
+
+    exerciseContainer.appendChild(card);
+
+  });
+
+
+  if (renderedCount === 0) renderEmptyState();
+
+}
+
+
+function renderPronunciation(cat) {
+
+  modeSummary.textContent = `Claves de pronunciación (${cat.pronunciation.length} palabras trampa)`;
+
+  cat.pronunciation.forEach(p => {
+
+    const div = document.createElement("div");
+
+    div.className = "pron-card";
+
+    const speakTarget = p.word.split('/')[0].trim();
+
+    div.innerHTML = `
+
+      <div style="display:flex; justify-content:space-between; align-items:center; gap:8px;">
+
+        <div>
+
+          <span class="pron-word">${p.word}</span>
+
+          <span class="pron-ipa">${p.ipa}</span>
+
+        </div>
+
+        <button type="button" class="btn btn-audio" data-speak="${escapeAttr(speakTarget)}">&#128266; Oír</button>
+
+      </div>
+
+      <div class="pron-tip">${p.tip}</div>
+
+    `;
+
+    exerciseContainer.appendChild(div);
+
+  });
+
+}
+
+
+function renderCap21() {
+
+  refreshCurrentSummary();
+
+  let renderedCount = 0;
+
+  let lastGroup = "";
+
+
+  APP_DATA.nl_survival.forEach((item, idx) => {
+
+    const key = `nl:${idx}`;
+
+    const state = progress[key];
+
+    const isDone = !!state;
+
+    if (onlyPending && isDone) return;
+
+    if (!matchesSearch(item.sentence, item.translation)) return;
+
+    renderedCount++;
+
+
+    if (item.group !== lastGroup) {
+
+      const banner = document.createElement("div");
+
+      banner.className = "group-banner";
+
+      banner.textContent = item.group;
+
+      exerciseContainer.appendChild(banner);
+
+      lastGroup = item.group;
+
+    }
+
+
+    const fullSentence = item.sentence.replace("______", item.answer);
+
+    const card = document.createElement("div");
+
+    card.className = "ex-card" + (state === "solved" ? " is-correct" : state === "revealed" ? " is-revealed" : "");
+
+    card.dataset.key = key;
+
+
+    const fbClass = state === "solved" ? "ok" : state === "revealed" ? "rev" : "";
+
+    const fbHtml = state === "solved"
+
+      ? `&#10003; ¡Perfecto! ${fullSentence}`
+
+      : state === "revealed"
+
+        ? `&#128161; Solución vista: <strong>${item.answer}</strong>`
+
+        : "";
+
+
+    card.innerHTML = `
+
+      <div class="ex-header">
+
+        <span class="ex-num">Situación #${idx + 1}</span>
+
+        <div class="card-actions">
+
+          <button type="button" class="btn btn-audio" data-speak="${escapeAttr(fullSentence)}">&#128266; Oír</button>
+
+          <button type="button" class="btn btn-hint" data-action="hint">Pista</button>
+
+          <button type="button" class="btn btn-hint" data-action="reveal">Solución</button>
+
+          <button type="button" class="btn btn-hint" data-action="clear" style="${isDone ? "" : "display:none;"}">Reintentar</button>
+
+        </div>
+
+      </div>
+
+      <div class="ex-prompt">${item.sentence}</div>
+
+      <div class="ex-sub">${item.translation}</div>
+
+      <div class="hint-box" style="display:none;">${makeHint(item.answer)}</div>
+
+      <div class="input-row">
+
+        <input type="text" class="ans-input" placeholder="Escribe la palabra en inglés..." value="${isDone ? escapeAttr(item.answer) : ""}" autocomplete="off" autocorrect="off" autocapitalize="none" spellcheck="false" enterkeyhint="done" />
+
+        <button type="button" class="btn btn-check">Comprobar</button>
+
+      </div>
+
+      <div class="feedback ${fbClass}">${fbHtml}</div>
+
+    `;
+
+
+    const hintBtn = card.querySelector('[data-action="hint"]');
+
+    const hintBox = card.querySelector('.hint-box');
+
+    hintBtn.addEventListener("click", () => {
+
+      hintBox.style.display = hintBox.style.display === "none" ? "inline-block" : "none";
+
+    });
+
+
+    attachCardHandlers(card, (val) => checkEnglishAnswer(val, item.answer), item.answer, key, true);
+
+    exerciseContainer.appendChild(card);
+
+  });
+
+
+  if (renderedCount === 0) renderEmptyState();
+
+}
+
+
+function attachCardHandlers(card, validatorFn, canonicalAnswer, storageKey, speakOnSuccess = false) {
+
+  const input = card.querySelector(".ans-input");
+
+  const checkBtn = card.querySelector(".btn-check");
+
+  const feedback = card.querySelector(".feedback");
+
+  const revealBtn = card.querySelector('[data-action="reveal"]');
+
+  const clearBtn = card.querySelector('[data-action="clear"]');
+
+  const audioBtn = card.querySelector('[data-speak]');
+
+  const isEn2Es = storageKey.startsWith("en2es:");
+
+
+  function markSolved() {
+
+    card.classList.remove("is-wrong", "is-revealed");
+
+    card.classList.add("is-correct");
+
+    feedback.className = "feedback ok";
+
+    if (isEn2Es) {
+
+      const hasMultiple = /[,;]|\s+\/\s+|\s+o\s+/.test(canonicalAnswer.replace(/\(.*?\)/g, ""));
+
+      feedback.innerHTML = hasMultiple
+
+        ? `&#10003; ¡Correcto! <br/><span style="font-weight:500;">Todos los significados en A1: <strong>${canonicalAnswer}</strong></span>`
+
+        : `&#10003; ¡Correcto! Significado: <strong>${canonicalAnswer}</strong>`;
+
+    } else {
+
+      const typedNorm = normalize(input.value);
+
+      const canonNorm = normalize(canonicalAnswer.replace(/\(.*?\)/g, ""));
+
+      const altNote = (typedNorm && typedNorm !== canonNorm) ? ` (forma principal: <strong>${canonicalAnswer}</strong>)` : ` <strong>${canonicalAnswer}</strong>`;
+
+      feedback.innerHTML = `&#10003; ¡Correcto!${altNote}`;
+
+    }
+
+    if (clearBtn) clearBtn.style.display = "inline-flex";
+
+    if (audioBtn) audioBtn.style.display = "inline-flex";
+
+    progress[storageKey] = "solved";
+
+    saveProgress();
+
+    refreshCurrentSummary();
+
+    checkIfAllDoneAndCelebrate();
+
+  }
+
+
+  function evaluate(silent = false) {
+
+    const val = input.value;
+
+    if (!val.trim()) {
+
+      if (!silent) {
+
+        feedback.className = "feedback err";
+
+        feedback.textContent = "Escribe primero una respuesta para corregirla.";
+
+      }
+
+      return false;
+
+    }
+
+    if (validatorFn(val)) {
+
+      markSolved();
+
+      if (speakOnSuccess && !silent) speakEnglish(canonicalAnswer);
+
+      return true;
+
+    } else {
+
+      card.classList.remove("is-correct", "is-revealed");
+
+      card.classList.add("is-wrong");
+
+      feedback.className = "feedback err";
+
+      feedback.innerHTML = `&#10007; No coincide. Revisa la ortografía o usa <em>Ver respuesta</em>.`;
+
+      return false;
+
+    }
+
+  }
+
+
+  checkBtn.addEventListener("click", () => evaluate(false));
+
+  input.addEventListener("keydown", (e) => {
+
+    if (e.key === "Enter") {
+
+      e.preventDefault();
+
+      evaluate(false);
+
+    }
+
+  });
+
+
+  if (revealBtn) {
+
+    revealBtn.addEventListener("click", () => {
+
+      input.value = canonicalAnswer;
+
+      card.classList.remove("is-wrong", "is-correct");
+
+      card.classList.add("is-revealed");
+
+      feedback.className = "feedback rev";
+
+      feedback.innerHTML = `&#128161; Solución vista: <strong>${canonicalAnswer}</strong> (pulsa <em>Reintentar</em> para sumarla a tu nota)`;
+
+      if (clearBtn) clearBtn.style.display = "inline-flex";
+
+      if (audioBtn) audioBtn.style.display = "inline-flex";
+
+      if (progress[storageKey] !== "solved") {
+
+        progress[storageKey] = "revealed";
+
+      }
+
+      saveProgress();
+
+      refreshCurrentSummary();
+
+      if (speakOnSuccess) speakEnglish(canonicalAnswer);
+
+    });
+
+  }
+
+
+  if (clearBtn) {
+
+    clearBtn.addEventListener("click", () => {
+
+      delete progress[storageKey];
+
+      saveProgress();
+
+      refreshCurrentSummary();
+
+      input.value = "";
+
+      card.classList.remove("is-correct", "is-wrong", "is-revealed");
+
+      feedback.className = "feedback";
+
+      feedback.textContent = "";
+
+      clearBtn.style.display = "none";
+
+      if (storageKey.startsWith("es2en:") && audioBtn) audioBtn.style.display = "none";
+
+      input.focus();
+
+    });
+
+  }
+
+
+  card._evaluate = () => evaluate(true);
+
+}
+
+
+// Events
+
+catSelect.addEventListener("change", () => {
+
+  currentCatId = Number(catSelect.value);
+
+  searchQuery = "";
+
+  searchInput.value = "";
+
+  render();
+
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+});
+
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    currentMode = btn.dataset.mode;
+
+    render();
+
+  });
+
+});
+
+
+togglePendingBtn.addEventListener("click", () => {
+
+  onlyPending = !onlyPending;
+
+  togglePendingBtn.classList.toggle("active", onlyPending);
+
+  render();
+
+});
+
+
+searchInput.addEventListener("input", () => {
+
+  searchQuery = searchInput.value;
+
+  render();
+
+});
+
+
+document.getElementById("checkAllBtn").addEventListener("click", () => {
+
+  let checkedAny = 0;
+
+  let correctBatch = 0;
+
+  document.querySelectorAll(".ex-card").forEach(card => {
+
+    if (card._evaluate && card.querySelector(".ans-input").value.trim()) {
+
+      checkedAny++;
+
+      if (card._evaluate()) correctBatch++;
+
+    }
+
+  });
+
+  if (!checkedAny) {
+
+    alert("Escribe al menos una respuesta en este bloque antes de corregir.");
+
+  } else {
+
+    const st = computeA1Stats();
+
+    batchText.textContent = `Corrección: ${correctBatch} de ${checkedAny} aciertos • Nota global A1: ${st.pctExact.toFixed(1)}%`;
+
+    batchBanner.classList.add("show");
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+  }
+
+});
+
+
+document.getElementById("resetCatBtn").addEventListener("click", () => {
+
+  if (!confirm("¿Seguro que quieres borrar tus respuestas de este tema?")) return;
+
+  const cid = Number(currentCatId);
+
+  Object.keys(progress).forEach(k => {
+
+    if (cid === 21 && k.startsWith("nl:")) delete progress[k];
+
+    else if (k.includes(`:${cid}:`)) delete progress[k];
+
+  });
+
+  saveProgress();
+
+  render();
+
+});
+
+
+// Init
+
+populateCategorySelect();
+
+updateGlobalHeader();
+
+render();
+
+</script>
+
+</body>
+
+</html>
+
